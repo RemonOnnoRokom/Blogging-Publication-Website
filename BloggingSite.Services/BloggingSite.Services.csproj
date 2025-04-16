@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="IService\" />
+    <ProjectReference Include="..\BloggingSite.Models\BloggingSite.Models.csproj" />
+    <ProjectReference Include="..\BlogginSite.Repositories\BlogginSite.Repositories.csproj" />
   </ItemGroup>
 
 </Project>
