@@ -1,3 +1,4 @@
+
 namespace BloggingSite
 {
     public class Program
@@ -8,6 +9,8 @@ namespace BloggingSite
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            var conn = builder.Configuration.GetConnectionString("BlogApplication");
+            //builder.Services.AddDbContext<>
 
             var app = builder.Build();
 
