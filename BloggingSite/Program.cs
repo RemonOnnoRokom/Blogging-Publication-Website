@@ -1,5 +1,7 @@
 
 using BlogginSite.Repositories.Db;
+using BlogginSite.Repositories.IRepository;
+using BlogginSite.Repositories.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace BloggingSite
@@ -15,6 +17,7 @@ namespace BloggingSite
             var conn = builder.Configuration.GetConnectionString("BlogApplication");
             builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(conn));
 
+            builder.Services.AddScoped<IApprovedBlogRepository, ApprovedBlogRepository>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
