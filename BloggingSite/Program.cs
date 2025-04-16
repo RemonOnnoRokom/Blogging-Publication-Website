@@ -1,4 +1,7 @@
 
+using BlogginSite.Repositories.Db;
+using Microsoft.EntityFrameworkCore;
+
 namespace BloggingSite
 {
     public class Program
@@ -10,7 +13,7 @@ namespace BloggingSite
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             var conn = builder.Configuration.GetConnectionString("BlogApplication");
-            //builder.Services.AddDbContext<>
+            builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(conn));
 
             var app = builder.Build();
 
