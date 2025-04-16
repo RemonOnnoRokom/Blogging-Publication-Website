@@ -28,18 +28,18 @@ namespace BlogginSite.Repositories.Repository
         public async Task DeleteAsync(int id)
         {
             var obj = await GetByIdAsync(id);
-             _context.ApprovedBlogs.Remove(obj);
+             _context.PendingBlogs.Remove(obj);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ApprovedBlog>> GetAllAsync()
+        public async Task<IEnumerable<PendingBlog>> GetAllAsync()
         {
-            return await _context.ApprovedBlogs.ToListAsync();
+            return await _context.PendingBlogs.ToListAsync();
         }
 
-        public async Task<ApprovedBlog> GetByIdAsync(int id)
+        public async Task<PendingBlog> GetByIdAsync(int id)
         {
-            return await _context.ApprovedBlogs.Where(x=>x.Id == id).FirstAsync();
+            return await _context.PendingBlogs.Where(x=>x.Id == id).FirstAsync();
         }
 
         public void Update(ApprovedBlog entity)

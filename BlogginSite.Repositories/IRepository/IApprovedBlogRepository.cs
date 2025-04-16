@@ -11,8 +11,8 @@ namespace BlogginSite.Repositories.IRepository
 {
     public interface IApprovedBlogRepository
     {
-        Task<IEnumerable<ApprovedBlog>> GetAllAsync();
-        Task<ApprovedBlog> GetByIdAsync(int id);
+        Task<IEnumerable<PendingBlog>> GetAllAsync();
+        Task<PendingBlog> GetByIdAsync(int id);
         Task AddAsync(ApprovedBlog entity);
         void Update(ApprovedBlog entity);
         Task DeleteAsync(int id);
