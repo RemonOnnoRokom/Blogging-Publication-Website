@@ -1,4 +1,5 @@
 ﻿using BloggingSite.Models.Entities;
+using BloggingSite.Services.IService;
 using BlogginSite.Repositories.Db;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,31 +8,29 @@ namespace BloggingSite.Controllers
 {
     public class ApprovedBlogPostController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public ApprovedBlogPostController(ApplicationDbContext context)
+        private readonly IApprovedBlogService _service;
+        public ApprovedBlogPostController(IApprovedBlogService service)
         {
-            _context = context;
+            _service = service;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var list = _context.PendingBlogs.ToList();
+            var list = await _service.GetAllAsync();
 
             return View(list);
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var obj = _context.PendingBlogs.Where(x => x.Id == id).FirstOrDefault();
-            _context.PendingBlogs.Remove(obj);
-            _context.SaveChanges();
+             await _service.DeleteAsync(id);
 
             return RedirectToAction("Index");
         }
 
-        public IActionResult Approved(int id)
+        public async Task<IActionResult> Approved(int id)
         {
-            var obj = _context.PendingBlogs.FirstOrDefault(x => x.Id == id);
+            var obj = await _service.GetByIdAsync(id);
 
             return View(obj);
         }
@@ -39,15 +38,15 @@ namespace BloggingSite.Controllers
         [HttpPost]
         public IActionResult Approved(PendingBlog obj)
         {
-            ApprovedBlog ApprovedObj = new ApprovedBlog();
-            ApprovedObj.Content = obj.Content.Substring(0);
-            ApprovedObj.CreatedDate = obj.CreatedDate;
+            //ApprovedBlog ApprovedObj = new ApprovedBlog();
+            //ApprovedObj.Content = obj.Content.Substring(0);
+            //ApprovedObj.CreatedDate = obj.CreatedDate;
 
-            ApprovedObj.CreatedBy = 2;
-            ApprovedObj.PublishedDate = DateTime.Now;
+            //ApprovedObj.CreatedBy = 2;
+            //ApprovedObj.PublishedDate = DateTime.Now;
 
-            _context.ApprovedBlogs.Add(ApprovedObj);
-            _context.PendingBlogs.Remove(obj);
+            //_service.ApprovedBlogs.Add(ApprovedObj);
+            //_service.PendingBlogs.Remove(obj);
 
            return RedirectToAction(nameof(Index));
         }
