@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BloggingSite.Models.Entities;
+using BloggingSite.Services.IService;
 using BlogginSite.Repositories.IRepository;
 
 namespace BloggingSite.Services.Service
 {
-    public class ApprovedBlogService : IApprovedBlogRepository
+    public class ApprovedBlogService : IApprovedBlogService
     {
         private readonly IApprovedBlogRepository _repository;
         public ApprovedBlogService(IApprovedBlogRepository repository)

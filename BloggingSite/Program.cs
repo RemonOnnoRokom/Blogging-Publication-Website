@@ -1,4 +1,6 @@
 
+using BloggingSite.Services.IService;
+using BloggingSite.Services.Service;
 using BlogginSite.Repositories.Db;
 using BlogginSite.Repositories.IRepository;
 using BlogginSite.Repositories.Repository;
@@ -14,10 +16,14 @@ namespace BloggingSite
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
             var conn = builder.Configuration.GetConnectionString("BlogApplication");
             builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(conn));
 
-            builder.Services.AddScoped<IApprovedBlogRepository, ApprovedBlogRepository>();
+            builder.Services.AddScoped<IApprovedBlogService,ApprovedBlogService>();
+
+            builder.Services.AddScoped<IApprovedBlogRepository,ApprovedBlogRepository>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
