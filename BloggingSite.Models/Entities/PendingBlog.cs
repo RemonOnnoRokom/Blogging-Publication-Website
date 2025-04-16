@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace BloggingSite.Models.Entities
 {
-    internal class BlogPostPending
+    public class PendingBlog
     {
+        public int Id { get; set; }
+        public string Content { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace BloggingSite.Models.Entities
 {
-    internal class ApprovedBlog
+    public class ApprovedBlog
     {
+        public int Id { get; set; }        
+        public string Content { get; set; }       
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int ApprovedBy { get; set; }
+        public DateTime PublishedDate { get; set; }
+        public List<BlogPostComment>? PostComments { get; set; }
+        public List<BlogPostReaction>? Reactions { get; set; }
+
     }
 }

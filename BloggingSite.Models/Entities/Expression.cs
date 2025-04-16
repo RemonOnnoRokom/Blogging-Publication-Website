@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BloggingSite.Models.Entities
 {
-    public enum Reaction
+    public enum Expression
     {
         Like = 1,
         Dislike
