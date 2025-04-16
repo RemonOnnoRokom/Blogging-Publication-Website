@@ -26,12 +26,12 @@ namespace BloggingSite.Services.Service
             await _repository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<ApprovedBlog>> GetAllAsync()
+        public async Task<IEnumerable<PendingBlog>> GetAllAsync()
         {
             return await _repository.GetAllAsync();
         }
 
-        public async Task<ApprovedBlog> GetByIdAsync(int id)
+        public async Task<PendingBlog> GetByIdAsync(int id)
         {
             return await _repository.GetByIdAsync(id);
         }
