@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace BloggingSite.Models.Entities
 {
-    public enum Reaction
+    internal class AboutBlogPost
     {
-        Like = 1,
-        Dislike
     }
 }
