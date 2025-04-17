@@ -1,0 +1,53 @@
+﻿@model SpecificBlogViewModel
+
+@{
+	ViewData["title"] = Model.ApprovedBlog?.Id;
+}
+
+<h1></h1>
+<hr />
+
+<dl class="row">
+
+	<dt class="col-sm-2">
+		Published Date :
+	</dt>
+	<dd class="col-sm-10">
+		@Model.ApprovedBlog?.PublishedDate
+	</dd>
+
+	<dt class="col-sm-2">
+		Author :
+	</dt>
+	<dd class="col-sm-10">
+		@Model.ApprovedBlog?.CreatedBy
+	</dd>
+
+	<dt class="col-sm-2">
+		Content :
+	</dt>
+	<dd class="col-sm-10">
+		@Model.ApprovedBlog?.Content
+	</dd>
+</dl>
+
+<!--coalescing krte hobe-->
+<a asp-controller="BlogPostReaction" asp-action="Likes" asp-route-PostId="@Model.ApprovedBlog.Id" asp-route-Expression="@Expression.Like">Like</a>
+<span>@Model.ApprovedBlog?.Reactions?.Count(x => x.Expression == Expression.Like)</span>
+
+<a asp-controller="BlogPostReaction" asp-action="Likes" asp-route-PostId="@Model.ApprovedBlog.Id" asp-route-Expression="@Expression.Dislike">DisLike</a>
+<span>@Model.ApprovedBlog?.Reactions?.Count(x => x.Expression == Expression.Dislike)</span>
+
+
+<p><b>Comments</b></p>
+<form asp-controller="BlogPostReaction" asp-action="Comments" asp-route-PostId="@Model.ApprovedBlog.Id">
+
+	<label name="Comment" name="Comment" class="control-base"></label>
+	<textarea type="text" name="Comment" class="form-control"></textarea>
+
+	<button type="submit" value="comment" class="btn btn-primary">Comment</button>
+</form>
+@foreach (var eachComment in Model.ApprovedBlog.PostComments)
+{
+	<p>@eachComment.Comment</p>	
+}

@@ -20,7 +20,7 @@ namespace BloggingSite
             var conn = builder.Configuration.GetConnectionString("BlogApplication");
             builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(conn));
 
-            builder.Services.AddScoped<IApprovedBlogService,ApprovedBlogService>();
+            builder.Services.AddScoped<IPendingBlogService,PendingBlogService>();
 
             builder.Services.AddScoped<IApprovedBlogRepository,ApprovedBlogRepository>();
 

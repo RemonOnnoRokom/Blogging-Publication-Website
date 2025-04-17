@@ -15,8 +15,7 @@ namespace BlogginSite.Repositories.Db
             
         }
 
-        public DbSet<ApprovedBlog> ApprovedBlogs { get; set; }
-        public DbSet<PendingBlog> PendingBlogs { get; set; }
+        public DbSet<ApprovedBlog> ApprovedBlogs { get; set; }        
         public DbSet<BlogPostReaction> PostReactions { get; set; }
         public DbSet<BlogPostComment> PostComments { get; set; }
     }

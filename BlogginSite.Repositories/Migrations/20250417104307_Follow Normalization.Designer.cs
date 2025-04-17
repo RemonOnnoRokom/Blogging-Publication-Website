@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogginSite.Repositories.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250416100504_add CreatedBy in PendingBlog Entity")]
-    partial class addCreatedByinPendingBlogEntity
+    [Migration("20250417104307_Follow Normalization")]
+    partial class FollowNormalization
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,6 +45,9 @@ namespace BlogginSite.Repositories.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("CurrentStatus")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("PublishedDate")
                         .HasColumnType("datetime2");
@@ -84,41 +87,17 @@ namespace BlogginSite.Repositories.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BlogId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Expression")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("BlogId");
-
-                    b.ToTable("PostReactions");
-                });
-
-            modelBuilder.Entity("BloggingSite.Models.Entities.PendingBlog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("PostId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
-                    b.ToTable("PendingBlogs");
+                    b.HasIndex("PostId");
+
+                    b.ToTable("PostReactions");
                 });
 
             modelBuilder.Entity("BloggingSite.Models.Entities.BlogPostComment", b =>
@@ -136,7 +115,7 @@ namespace BlogginSite.Repositories.Migrations
                 {
                     b.HasOne("BloggingSite.Models.Entities.ApprovedBlog", "Post")
                         .WithMany()
-                        .HasForeignKey("BlogId")
+                        .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

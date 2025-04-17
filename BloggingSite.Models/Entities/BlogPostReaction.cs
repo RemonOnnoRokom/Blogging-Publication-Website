@@ -11,8 +11,8 @@ namespace BloggingSite.Models.Entities
     public class BlogPostReaction
     {
         public int Id { get; set; }
-        public int BlogId{ get; set; }
-        [ForeignKey(nameof(BlogId))]
+        public int PostId{ get; set; }
+        [ForeignKey(nameof(PostId))]
         public ApprovedBlog? Post { get; set; }
         public Expression Expression { get; set; }
 

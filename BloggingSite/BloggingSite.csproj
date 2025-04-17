@@ -20,4 +20,11 @@
     <ProjectReference Include="..\BlogginSite.Repositories\BlogginSite.Repositories.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\PendingBlogPost\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

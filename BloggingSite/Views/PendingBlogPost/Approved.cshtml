@@ -1,0 +1,26 @@
+﻿@model PendingBlog
+
+@{
+	ViewData["Title"] = "Approved";
+}
+
+Posted By:@Model.CreatedBy<br />
+Posted Date: @Model.CreatedDate
+<hr />
+
+	<div class="col-md-4">
+	<form asp-action="Approved" asp-controller="PendingBlogPost" method="post">
+			<div class="form-group">	
+				<textarea asp-for="Content" readonly>@Model.Content</textarea>
+			</div>
+
+			<div class="form-group">
+				<button type="submit" value="Approved" class="btn btn-success" >Approved</button> |
+				<a asp-action="Discard" class="btn btn-danger" asp-route-id="@Model.Id">Discard</a>
+			</div>
+		</form>
+	</div>
+<br />
+<div>
+	<a asp-action="Index" class="btn btn-primary">Pending List</a>
+</div>

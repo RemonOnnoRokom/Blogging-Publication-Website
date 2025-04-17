@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BlogginSite.Repositories.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDatabaseDesign : Migration
+    public partial class FollowNormalization : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,29 +17,16 @@ namespace BlogginSite.Repositories.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ApprovedBy = table.Column<int>(type: "int", nullable: false),
+                    PublishedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CurrentStatus = table.Column<int>(type: "int", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ApprovedBy = table.Column<int>(type: "int", nullable: false),
-                    PublishedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ApprovedBlogs", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PendingBlogs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PendingBlogs", x => x.Id);
+                    table.PrimaryKey("PK_ApprovedBlogs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,15 +55,15 @@ namespace BlogginSite.Repositories.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BlogId = table.Column<int>(type: "int", nullable: false),
+                    PostId = table.Column<int>(type: "int", nullable: false),
                     Expression = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PostReactions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PostReactions_ApprovedBlogs_BlogId",
-                        column: x => x.BlogId,
+                        name: "FK_PostReactions_ApprovedBlogs_PostId",
+                        column: x => x.PostId,
                         principalTable: "ApprovedBlogs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -88,17 +75,14 @@ namespace BlogginSite.Repositories.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PostReactions_BlogId",
+                name: "IX_PostReactions_PostId",
                 table: "PostReactions",
-                column: "BlogId");
+                column: "PostId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "PendingBlogs");
-
             migrationBuilder.DropTable(
                 name: "PostComments");
 
