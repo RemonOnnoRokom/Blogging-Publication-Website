@@ -1,9 +1,11 @@
 
+using BloggingSite.Models.Entities;
 using BloggingSite.Services.IService;
 using BloggingSite.Services.Service;
 using BlogginSite.Repositories.Db;
 using BlogginSite.Repositories.IRepository;
 using BlogginSite.Repositories.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace BloggingSite
@@ -19,6 +21,17 @@ namespace BloggingSite
 
             var conn = builder.Configuration.GetConnectionString("BlogApplication");
             builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(conn));
+
+            builder.Services.AddIdentity<MyUser, IdentityRole<long>>(optn =>
+            {
+                optn.Password.RequiredUniqueChars = 0;
+                optn.Password.RequiredLength = 6;
+                optn.Password.RequireUppercase = false;
+                optn.Password.RequireNonAlphanumeric = false;
+                optn.Password.RequireLowercase = false;
+
+            }).
+            AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
             builder.Services.AddScoped<IPendingBlogService,PendingBlogService>();
 
