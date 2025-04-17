@@ -3,6 +3,7 @@ using BloggingSite.Models;
 using BloggingSite.Models.Entities;
 using BloggingSite.Models.ViewModel;
 using BlogginSite.Repositories.Db;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BloggingSite.Controllers
@@ -35,11 +36,13 @@ namespace BloggingSite.Controllers
             return View(obj);
         }
 
+        [Authorize]
         public IActionResult CreateNewBlog()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult CreateNewBlog([Bind("Content")]PendingBlog Obj)
         {

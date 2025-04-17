@@ -1,10 +1,12 @@
 ﻿using BloggingSite.Models.Entities;
 using BloggingSite.Models.ViewModel;
 using BlogginSite.Repositories.Db;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BloggingSite.Controllers
 {
+    [Authorize]
     public class BlogPostReactionController : Controller
     {
         private readonly ApplicationDbContext _context;
