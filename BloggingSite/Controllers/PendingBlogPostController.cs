@@ -1,11 +1,13 @@
 ﻿using BloggingSite.Models.ViewModel;
 using BloggingSite.Services.IService;
 using BlogginSite.Repositories.Db;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BloggingSite.Controllers
 {
+    [Authorize]
     public class PendingBlogPostController : Controller
     {
         private readonly IPendingBlogService _service;

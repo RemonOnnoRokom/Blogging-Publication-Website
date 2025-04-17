@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BloggingSite.Models.ViewModel;
 
 namespace BloggingSite.Models.Entities
 {
-    public class BlogPostComment
+    public class BlogPostComment: CommonUser
     {
         public int Id { get; set; }
         public int PostId { get; set; }
