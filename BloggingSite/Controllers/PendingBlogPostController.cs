@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BloggingSite.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class PendingBlogPostController : Controller
     {
         private readonly IPendingBlogService _service;

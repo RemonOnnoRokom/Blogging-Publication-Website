@@ -21,7 +21,6 @@ namespace BloggingSite.Services.Service
         {
             ApprovedBlog Obj = new ApprovedBlog();
 
-            Obj.ApprovedBy = 2;
             Obj.CreatedBy = entity.CreatedBy;
             Obj.Content = entity.Content;
             Obj.CreatedDate = entity.CreatedDate;

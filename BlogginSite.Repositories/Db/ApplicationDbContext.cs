@@ -7,6 +7,7 @@ using BloggingSite.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace BlogginSite.Repositories.Db
 {
@@ -20,5 +21,11 @@ namespace BlogginSite.Repositories.Db
         public DbSet<ApprovedBlog> ApprovedBlogs { get; set; }        
         public DbSet<BlogPostReaction> PostReactions { get; set; }        
         public DbSet<BlogPostComment> PostComments { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+        }
     }
 }

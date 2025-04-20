@@ -15,3 +15,4 @@ namespace BloggingSite.Models.Entities
         public string Name { get; set; }
     }
 }
+

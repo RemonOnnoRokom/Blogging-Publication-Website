@@ -30,7 +30,7 @@ namespace BloggingSite
                 optn.Password.RequireNonAlphanumeric = false;
                 optn.Password.RequireLowercase = false;
 
-            }).
+            }).AddRoles<IdentityRole<long>>().
             AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
             builder.Services.AddScoped<IPendingBlogService,PendingBlogService>();

@@ -1,10 +1,12 @@
 ﻿using BloggingSite.Models.Entities;
 using BloggingSite.Models.LoginRegistration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BloggingSite.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly SignInManager<MyUser> _signInManager;
@@ -14,11 +16,14 @@ namespace BloggingSite.Controllers
             _signInManager = signInManager;
             _userManager = userManager;
         }
+
+        [AllowAnonymous]
         public IActionResult LogIn()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> LogIn(LoginVM model)
         {
@@ -37,7 +42,7 @@ namespace BloggingSite.Controllers
             return View(model);
         }
 
-
+        
         public async Task<IActionResult> LogOut()
         {
             //await base.OnInitializedAsync();
@@ -46,6 +51,7 @@ namespace BloggingSite.Controllers
 
         }
 
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();

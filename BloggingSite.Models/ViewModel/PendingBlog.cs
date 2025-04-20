@@ -16,7 +16,7 @@ namespace BloggingSite.Models.ViewModel
         [Required]
         [MinLength(30)]
         public string Content { get; set; }
-        public int CreatedBy { get; set; }
+        public long CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
 
     }

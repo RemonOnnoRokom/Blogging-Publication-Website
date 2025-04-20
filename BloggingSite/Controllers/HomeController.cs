@@ -4,6 +4,7 @@ using BloggingSite.Models.Entities;
 using BloggingSite.Models.ViewModel;
 using BlogginSite.Repositories.Db;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BloggingSite.Controllers
@@ -12,10 +13,12 @@ namespace BloggingSite.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        private readonly UserManager<MyUser> _userManager;
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context,UserManager<MyUser> userManager)
         {
             _logger = logger;
             _context = context;
+            _userManager = userManager; 
         }
 
         public IActionResult Index()
@@ -44,9 +47,11 @@ namespace BloggingSite.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreateNewBlog([Bind("Content")]PendingBlog Obj)
+        public async Task<IActionResult> CreateNewBlog([Bind("Content")]PendingBlog Obj)
         {
-            Obj.CreatedBy = 2;
+            string name = User.Identity.Name!;
+            MyUser obj = await _userManager.FindByNameAsync(name);
+            Obj.CreatedBy = obj.Id;
             Obj.CreatedDate = DateTime.Now;
 
             ApprovedBlog Obj2 = new ApprovedBlog();

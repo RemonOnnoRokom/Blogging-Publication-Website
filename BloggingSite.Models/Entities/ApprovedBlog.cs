@@ -10,7 +10,7 @@ namespace BloggingSite.Models.Entities
 {
     public class ApprovedBlog : PendingBlog
     {       
-        public int ApprovedBy { get; set; }
+        public long ApprovedBy { get; set; }
         public DateTime PublishedDate { get; set; }
         public BlogStatus CurrentStatus { get; set; } = BlogStatus.Create;
 
