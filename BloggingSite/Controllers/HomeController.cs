@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace BloggingSite.Controllers
 {
     public class HomeController : Controller
@@ -23,9 +24,30 @@ namespace BloggingSite.Controllers
 
         public IActionResult Index()
         {
-            var list = _context.ApprovedBlogs.Where(x=>x.CurrentStatus == BlogStatus.Approved).ToList();
+            ApprovedBlogVM approvedBlogVM = new ApprovedBlogVM();
 
-            return View(list);
+            var list = _context.ApprovedBlogs.Where(x=>x.CurrentStatus == BlogStatus.Approved).ToList();
+            approvedBlogVM.ApprovedBlogs = list;
+            approvedBlogVM.ItemNumber = 5;
+            return View(approvedBlogVM);
+        }
+
+        public IActionResult LoadMore(int Number)
+        {
+            ApprovedBlogVM approvedBlogVM = new ApprovedBlogVM();
+
+            var list = _context.ApprovedBlogs.Where(x => x.CurrentStatus == BlogStatus.Approved).ToList();
+            approvedBlogVM.ApprovedBlogs = list;
+            if(list.Count() > Number + 5)
+            {
+                approvedBlogVM.ItemNumber = Number;
+            }
+            else
+            {
+                approvedBlogVM.ItemNumber = list.Count();
+            }
+            
+            return View(nameof(Index),approvedBlogVM);
         }
 
         public IActionResult SpecificBlog(int id)
@@ -64,6 +86,8 @@ namespace BloggingSite.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

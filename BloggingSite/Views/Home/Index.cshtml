@@ -1,4 +1,4 @@
-﻿@model List<ApprovedBlog>
+﻿@model ApprovedBlogVM
 
 @{
     ViewData["Title"] = "Home";
@@ -16,7 +16,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.ApprovedBlogs.Take(Model.ItemNumber))
         {
             <tr>
                 <td  width="600px"> @item.Content.Substring(0,10)</td>
@@ -28,3 +28,11 @@
         }
     </tbody>
 </table>
+
+@if(Model.ApprovedBlogs.Count() > Model.ItemNumber){
+    <a asp-action="LoadMore" asp-controller="Home" asp-route-Number="@(Model.ItemNumber + 5)">Load More</a>
+}
+else{
+    <a asp-action="LoadMore" asp-controller="Home" asp-route-Number="@(Model.ItemNumber - 10)">Load Less</a>
+}
+
