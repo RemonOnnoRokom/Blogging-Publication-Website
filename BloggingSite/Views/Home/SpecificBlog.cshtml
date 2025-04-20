@@ -29,17 +29,16 @@
 	<dd class="col-sm-10">
 		@Model.ApprovedBlog?.Content
 	</dd>
-</dl>
+</dl> 
 
-<!--coalescing krte hobe-->
-<a asp-controller="BlogPostReaction" asp-action="Likes" asp-route-PostId="@Model.ApprovedBlog.Id" asp-route-Expression="@Expression.Like">Like</a>
-<span>@Model.ApprovedBlog?.Reactions?.Count(x => x.Expression == Expression.Like)</span>
+<a asp-controller="BlogPostReaction" asp-action="Likes" asp-route-myUserName="@User.Identity.Name" asp-route-postId="@Model.ApprovedBlog.Id" asp-route-expression="@Expression.Like">Like</a>
+<span>@(Model.ApprovedBlog.Reactions.Where(x => x.Expression == Expression.Like).Count())</span>
 
-<a asp-controller="BlogPostReaction" asp-action="Likes" asp-route-PostId="@Model.ApprovedBlog.Id" asp-route-Expression="@Expression.Dislike">DisLike</a>
-<span>@Model.ApprovedBlog?.Reactions?.Count(x => x.Expression == Expression.Dislike)</span>
+<a asp-controller="BlogPostReaction" asp-action="Likes" asp-route-myUserName="@User.Identity.Name" asp-route-postId="@Model.ApprovedBlog.Id" asp-route-expression="@Expression.Dislike">DisLike</a>
+<span>@(Model.ApprovedBlog.Reactions.Count(x => x.Expression == Expression.Dislike))</span>
 
 
-<p><b>Comments</b></p>
+<p>Comments</p>
 <form asp-controller="BlogPostReaction" asp-action="Comments" asp-route-PostId="@Model.ApprovedBlog.Id">
 
 	<label name="Comment" name="Comment" class="control-base"></label>

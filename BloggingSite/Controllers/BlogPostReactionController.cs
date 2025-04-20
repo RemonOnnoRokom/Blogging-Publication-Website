@@ -2,6 +2,7 @@
 using BloggingSite.Models.ViewModel;
 using BlogginSite.Repositories.Db;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BloggingSite.Controllers
@@ -10,22 +11,43 @@ namespace BloggingSite.Controllers
     public class BlogPostReactionController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public BlogPostReactionController(ApplicationDbContext context)
+        private UserManager<MyUser> _userManager;
+        public BlogPostReactionController(ApplicationDbContext context , UserManager<MyUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        public IActionResult Likes([Bind("PostId,Expression")]BlogPostReaction Obj)
+        public async Task<IActionResult> Likes(string myUserName, int postId , Expression expression)
         {
-            //BlogPostReaction Obj = new BlogPostReaction()
-            //{
-            //    PostId = PostId,
-            //    Expression = type
-            //};
-            _context.PostReactions.Add(Obj);
-            _context.SaveChanges();
-            
+            BlogPostReaction Obj = new BlogPostReaction();
+            Obj.PostId = postId;
+            Obj.Expression = expression;
+            var user = await _userManager.FindByNameAsync(myUserName);
+
+            Obj.MyUserId = user.Id;
+
+            var persistOrNot = _context.PostReactions.Where(x => x.PostId == postId && x.MyUserId == Obj.MyUserId).FirstOrDefault();
+
+            if (persistOrNot != null) 
+            {
+                persistOrNot.Expression = expression;
+                Update(persistOrNot);
+            }
+            else
+            {
+                _context.PostReactions.Add(Obj);
+                _context.SaveChanges();
+            }
+           
             return  RedirectToAction($"SpecificBlog","Home",new { id = Obj.PostId });      
+        }
+
+        public  void Update(BlogPostReaction Obj)
+        {
+             _context.PostReactions.Update(Obj);
+             _context.SaveChanges();
+            
         }
 
         public IActionResult Comments([Bind("PostId,Comment")]BlogPostComment Obj)
