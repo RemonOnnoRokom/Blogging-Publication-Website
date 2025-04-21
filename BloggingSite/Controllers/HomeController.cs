@@ -22,30 +22,26 @@ namespace BloggingSite.Controllers
             _userManager = userManager; 
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int skip = 0)
         {
             ApprovedBlogVM approvedBlogVM = new ApprovedBlogVM();
 
-            var list = _context.ApprovedBlogs.Where(x=>x.CurrentStatus == BlogStatus.Approved).ToList();
+            var list = _context.ApprovedBlogs.Where(x=>x.CurrentStatus == BlogStatus.Approved).Skip(skip).Take(6).ToList();
+
             approvedBlogVM.ApprovedBlogs = list;
             approvedBlogVM.ItemNumber = 5;
+
             return View(approvedBlogVM);
         }
 
         public IActionResult LoadMore(int Number)
         {
             ApprovedBlogVM approvedBlogVM = new ApprovedBlogVM();
+            ///.Skip(Model.ItemNumber - 5 ).Take(5)
+            var list = _context.ApprovedBlogs.Where(x => x.CurrentStatus == BlogStatus.Approved).Skip(Number - 5 ).Take(6).ToList();
 
-            var list = _context.ApprovedBlogs.Where(x => x.CurrentStatus == BlogStatus.Approved).ToList();
             approvedBlogVM.ApprovedBlogs = list;
-            if(list.Count() > Number + 5)
-            {
-                approvedBlogVM.ItemNumber = Number;
-            }
-            else
-            {
-                approvedBlogVM.ItemNumber = list.Count();
-            }
+            approvedBlogVM.ItemNumber += 5;
             
             return View(nameof(Index),approvedBlogVM);
         }
