@@ -31,10 +31,10 @@
 	</dd>
 </dl> 
 
-<a asp-controller="BlogPostReaction" asp-action="Likes" asp-route-myUserName="@User.Identity.Name" asp-route-postId="@Model.ApprovedBlog.Id" asp-route-expression="@Expression.Like">Like</a>
+<a asp-controller="BlogPostReaction" asp-action="Likes" asp-route-myUserName="@User.Identity.Name" asp-route-postId="@Model.ApprovedBlog.Id" asp-route-expression="@Expression.Like"><i class="bi bi-hand-thumbs-up-fill"></i></a>
 <span>@(Model.ApprovedBlog.Reactions.Where(x => x.Expression == Expression.Like).Count())</span>
 
-<a asp-controller="BlogPostReaction" asp-action="Likes" asp-route-myUserName="@User.Identity.Name" asp-route-postId="@Model.ApprovedBlog.Id" asp-route-expression="@Expression.Dislike">DisLike</a>
+<a asp-controller="BlogPostReaction" asp-action="Likes" asp-route-myUserName="@User.Identity.Name" asp-route-postId="@Model.ApprovedBlog.Id" asp-route-expression="@Expression.Dislike"><i class="bi bi-hand-thumbs-down-fill"></i></a>
 <span>@(Model.ApprovedBlog.Reactions.Count(x => x.Expression == Expression.Dislike))</span>
 
 <br />
