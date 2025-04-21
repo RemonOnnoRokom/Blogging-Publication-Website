@@ -31,8 +31,14 @@ namespace BloggingSite.Controllers
 
             if (persistOrNot != null) 
             {
-                persistOrNot.Expression = expression;
-                Update(persistOrNot);
+                if (persistOrNot.Expression == expression)
+                    Delete(persistOrNot);
+                else
+                {
+                    persistOrNot.Expression = expression;
+                    Update(persistOrNot);
+                }
+                
             }
             else
             {
@@ -48,6 +54,12 @@ namespace BloggingSite.Controllers
              _context.PostReactions.Update(Obj);
              _context.SaveChanges();
             
+        }
+
+        public void Delete(BlogPostReaction Obj)
+        {
+            _context.PostReactions.Remove(Obj);
+            _context.SaveChanges();
         }
 
         public IActionResult Comments([Bind("PostId,Comment")]BlogPostComment Obj)
