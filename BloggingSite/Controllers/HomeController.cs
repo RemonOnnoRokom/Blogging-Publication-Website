@@ -67,8 +67,15 @@ namespace BloggingSite.Controllers
                                                                                                         Comment = Comments.Comment
                                                                                                  }
                                                                         ).Where(x => x.PostId == id).ToList();
-
-            obj.UserId = (await _userManager.FindByNameAsync(User.Identity.Name)).Id  ;
+            if(User.Identity.Name == null)
+            {
+                obj.UserId = -1;
+            }
+            else
+            {
+                obj.UserId = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
+            }
+            
 
             return View(obj);
         }
