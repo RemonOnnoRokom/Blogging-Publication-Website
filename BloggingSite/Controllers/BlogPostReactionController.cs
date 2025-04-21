@@ -64,10 +64,13 @@ namespace BloggingSite.Controllers
 
         public async Task<IActionResult> Comments([Bind("PostId,Comment")]BlogPostComment Obj)
         {
-          Obj.MyUserId = ( await  _userManager.FindByNameAsync(User.Identity.Name)).Id;
-            _context.PostComments.Add(Obj);
-            _context.SaveChanges();
-
+            if(Obj.Comment is not null)
+            {
+                Obj.MyUserId = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
+                _context.PostComments.Add(Obj);
+                _context.SaveChanges();
+            }
+           
             return RedirectToAction($"SpecificBlog", "Home", new { id = Obj.PostId });
         }
         
