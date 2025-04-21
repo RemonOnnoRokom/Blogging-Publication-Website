@@ -28,11 +28,11 @@ namespace BloggingSite.Services.Service
             await _repository.AddAsync(Obj);                            
         }
 
-        public void Approved(PendingBlog entity)
+        public void Approved(PendingBlog entity , long approvedId )
         {
             ApprovedBlog Obj = new ApprovedBlog();
             Obj.Id= entity.Id;
-            Obj.ApprovedBy = 2;
+            Obj.ApprovedBy = approvedId;
             Obj.CreatedBy = entity.CreatedBy;
             Obj.Content = entity.Content;
             Obj.CreatedDate = entity.CreatedDate;
@@ -40,6 +40,7 @@ namespace BloggingSite.Services.Service
             Obj.Content = entity.Content;
             Obj.CreatedDate = entity.CreatedDate;
             Obj.CurrentStatus = BlogStatus.Approved;
+            Obj.MyUserId = entity.CreatedBy;
 
             _repository.Update(Obj);
         }

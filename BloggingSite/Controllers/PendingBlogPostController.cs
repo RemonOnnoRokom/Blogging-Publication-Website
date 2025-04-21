@@ -1,7 +1,9 @@
-﻿using BloggingSite.Models.ViewModel;
+﻿using BloggingSite.Models.Entities;
+using BloggingSite.Models.ViewModel;
 using BloggingSite.Services.IService;
 using BlogginSite.Repositories.Db;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,9 +13,11 @@ namespace BloggingSite.Controllers
     public class PendingBlogPostController : Controller
     {
         private readonly IPendingBlogService _service;
-        public PendingBlogPostController(IPendingBlogService service)
+        private UserManager<MyUser> _userManager;
+        public PendingBlogPostController(IPendingBlogService service , UserManager<MyUser> userManager)
         {
             _service = service;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
@@ -39,8 +43,9 @@ namespace BloggingSite.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Approved(PendingBlog Obj)
-        {   
-           _service.Approved(Obj);
+        {
+            long id = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
+           _service.Approved(Obj,id);
 
            return RedirectToAction(nameof(Index));
         }

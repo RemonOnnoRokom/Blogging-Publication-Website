@@ -15,6 +15,6 @@ namespace BloggingSite.Services.IService
         Task AddAsync(PendingBlog entity);
         void Update(ApprovedBlog entity);
         Task DeleteAsync(int id);
-        void Approved(PendingBlog entity);
+        void Approved(PendingBlog entity ,long approvedId);
     }
 }
