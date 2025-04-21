@@ -11,6 +11,6 @@ namespace BloggingSite.Models.ViewModel
     {
         public ApprovedBlog? ApprovedBlog { get; set; }
         //public BlogPostComment? Comment { get; set; }
-        //public BlogPostReaction? Reaction { get; set; }
+        public long UserId { get; set; }
     }
 }

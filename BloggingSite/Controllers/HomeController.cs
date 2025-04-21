@@ -50,7 +50,7 @@ namespace BloggingSite.Controllers
             return View(nameof(Index),approvedBlogVM);
         }
 
-        public IActionResult SpecificBlog(int id)
+        public async Task<IActionResult> SpecificBlog(int id)
         {
             SpecificBlogViewModel obj = new SpecificBlogViewModel();
             //LINQ diye join dite hobe  
@@ -66,7 +66,9 @@ namespace BloggingSite.Controllers
                                                                                                         PostId =Comments.PostId,
                                                                                                         Comment = Comments.Comment
                                                                                                  }
-                                                    ).Where(x => x.PostId == id).ToList();
+                                                                        ).Where(x => x.PostId == id).ToList();
+
+            obj.UserId = (await _userManager.FindByNameAsync(User.Identity.Name)).Id  ;
 
             return View(obj);
         }
