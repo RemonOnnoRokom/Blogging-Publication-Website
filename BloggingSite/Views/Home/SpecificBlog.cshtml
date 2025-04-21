@@ -72,8 +72,9 @@
 </form>
 @foreach (var eachComment in Model.ApprovedBlog.PostComments)
 {
-	<hr />
+	
 	<span class="fw-bold">@eachComment.Name </span>
 	<span> 	--> &nbsp;@eachComment.Comment</span>
-	<hr />
+	<br />
+	<br />
 }
