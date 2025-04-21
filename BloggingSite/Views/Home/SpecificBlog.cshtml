@@ -32,24 +32,34 @@
 </dl> 
 
 <!--Like-->
-@if(Model.ApprovedBlog.Reactions.Any(x => x.MyUserId == Model.UserId  && x.Expression == Expression.Like))
-{
-	<a asp-controller="BlogPostReaction" asp-action="Likes" asp-route-myUserName="@User.Identity.Name" asp-route-postId="@Model.ApprovedBlog.Id" asp-route-expression="@Expression.Like"><i class="bi bi-hand-thumbs-up-fill"></i></a>
-}
-else{
-	<a asp-controller="BlogPostReaction" asp-action="Likes" asp-route-myUserName="@User.Identity.Name" asp-route-postId="@Model.ApprovedBlog.Id" asp-route-expression="@Expression.Like"><i class="bi bi-hand-thumbs-up"></i></a>
-}
-<span>@(Model.ApprovedBlog.Reactions.Where(x => x.Expression == Expression.Like).Count())</span>
+<a asp-controller="BlogPostReaction"  asp-action="Likes" asp-route-myUserName="@User.Identity.Name" asp-route-postId="@Model.ApprovedBlog.Id" asp-route-expression="@Expression.Like">
+	@{
+		if (Model.ApprovedBlog.Reactions.Any(x => x.MyUserId == Model.UserId && x.Expression == Expression.Like))
+		{
+			<i class="bi bi-hand-thumbs-up-fill"></i>
+		}
+
+		else
+		{
+			<i class="bi bi-hand-thumbs-up"></i>
+		}
+
+	}
+</a>
+<span>@(Model.ApprovedBlog.Reactions.Where(x => x.Expression == Expression.Like).Count())</span> 
 
 <!--DisLike-->
-@if(Model.ApprovedBlog.Reactions.Any(x => x.MyUserId == Model.UserId && x.Expression == Expression.Dislike))
-{
-	<a asp-controller="BlogPostReaction" asp-action="Likes" asp-route-myUserName="@User.Identity.Name" asp-route-postId="@Model.ApprovedBlog.Id" asp-route-expression="@Expression.Dislike"><i class="bi bi-hand-thumbs-down-fill"></i></a>
+<a asp-controller="BlogPostReaction" asp-action="Likes" asp-route-myUserName="@User.Identity.Name" asp-route-postId="@Model.ApprovedBlog.Id" asp-route-expression="@Expression.Dislike">
+@{
+	if(Model.ApprovedBlog.Reactions.Any(x => x.MyUserId == Model.UserId && x.Expression == Expression.Dislike))
+	{
+		<i class="bi bi-hand-thumbs-down-fill"></i>
+	}
+	else{
+			<i class="bi bi-hand-thumbs-down"></i>
+	}
 }
-else
-{
-	<a asp-controller="BlogPostReaction" asp-action="Likes" asp-route-myUserName="@User.Identity.Name" asp-route-postId="@Model.ApprovedBlog.Id" asp-route-expression="@Expression.Dislike"><i class="bi bi-hand-thumbs-down"></i></a>
-}
+</a>
 <span>@(Model.ApprovedBlog.Reactions.Count(x => x.Expression == Expression.Dislike))</span>
 
 <br />
