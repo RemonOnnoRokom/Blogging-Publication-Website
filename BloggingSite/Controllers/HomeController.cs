@@ -80,6 +80,7 @@ namespace BloggingSite.Controllers
             Obj2.Content = Obj.Content;
             Obj2.CreatedBy = Obj.CreatedBy;
             Obj2.CreatedDate = Obj.CreatedDate;
+            Obj2.MyUserId = Obj2.CreatedBy;
 
             _context.ApprovedBlogs.Add(Obj2);
             _context.SaveChanges();
