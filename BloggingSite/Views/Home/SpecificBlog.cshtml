@@ -37,16 +37,18 @@
 <a asp-controller="BlogPostReaction" asp-action="Likes" asp-route-myUserName="@User.Identity.Name" asp-route-postId="@Model.ApprovedBlog.Id" asp-route-expression="@Expression.Dislike">DisLike</a>
 <span>@(Model.ApprovedBlog.Reactions.Count(x => x.Expression == Expression.Dislike))</span>
 
-
-<p>Comments</p>
+<br />
+<span class="fw-bold">Comments</span>
 <form asp-controller="BlogPostReaction" asp-action="Comments" asp-route-PostId="@Model.ApprovedBlog.Id">
 
-	<label name="Comment" name="Comment" class="control-base"></label>
 	<textarea type="text" name="Comment" class="form-control"></textarea>
-
+	<br />
 	<button type="submit" value="comment" class="btn btn-primary">Comment</button>
 </form>
 @foreach (var eachComment in Model.ApprovedBlog.PostComments)
 {
-	<p>@eachComment.Comment</p>	
+	<hr />
+	<span class="fw-bold">@eachComment.Name </span>
+	<span> 	--> &nbsp;@eachComment.Comment</span>
+	<hr />
 }

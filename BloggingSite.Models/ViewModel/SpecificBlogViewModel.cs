@@ -10,7 +10,7 @@ namespace BloggingSite.Models.ViewModel
     public class SpecificBlogViewModel 
     {
         public ApprovedBlog? ApprovedBlog { get; set; }
-        public BlogPostComment? Comment { get; set; }
-        public BlogPostReaction? Reaction { get; set; }
+        //public BlogPostComment? Comment { get; set; }
+        //public BlogPostReaction? Reaction { get; set; }
     }
 }

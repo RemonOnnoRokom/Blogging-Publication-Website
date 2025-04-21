@@ -15,7 +15,7 @@ namespace BloggingSite.Models.Entities
         public BlogStatus CurrentStatus { get; set; } = BlogStatus.Create;
 
         [NotMapped]
-        public List<BlogPostComment> PostComments { get; set; }
+        public List<CommentsVM> PostComments { get; set; }
 
         [NotMapped]
         public List<BlogPostReaction> Reactions { get; set; }

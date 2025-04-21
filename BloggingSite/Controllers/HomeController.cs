@@ -56,7 +56,17 @@ namespace BloggingSite.Controllers
             //LINQ diye join dite hobe  
             obj.ApprovedBlog = _context.ApprovedBlogs.Where(x=>x.Id == id).FirstOrDefault();
             obj.ApprovedBlog.Reactions = _context.PostReactions.Where(x=>x.PostId == id).ToList();
-            obj.ApprovedBlog.PostComments = _context.PostComments.Where(x => x.PostId == id).ToList();
+            obj.ApprovedBlog.PostComments = _context.PostComments.Join(_userManager.Users, 
+                                                                        Comments => Comments.MyUserId,
+                                                                        Commentator => Commentator.Id,
+                                                                        (Comments,Commentator) => new CommentsVM()
+                                                                                                 {
+                                                                                                        Id= Comments.Id,
+                                                                                                        Name = Commentator.Name,
+                                                                                                        PostId =Comments.PostId,
+                                                                                                        Comment = Comments.Comment
+                                                                                                 }
+                                                    ).Where(x => x.PostId == id).ToList();
 
             return View(obj);
         }

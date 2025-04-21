@@ -62,8 +62,9 @@ namespace BloggingSite.Controllers
             _context.SaveChanges();
         }
 
-        public IActionResult Comments([Bind("PostId,Comment")]BlogPostComment Obj)
+        public async Task<IActionResult> Comments([Bind("PostId,Comment")]BlogPostComment Obj)
         {
+          Obj.MyUserId = ( await  _userManager.FindByNameAsync(User.Identity.Name)).Id;
             _context.PostComments.Add(Obj);
             _context.SaveChanges();
 
