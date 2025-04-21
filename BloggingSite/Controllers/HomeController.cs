@@ -53,6 +53,7 @@ namespace BloggingSite.Controllers
         public async Task<IActionResult> SpecificBlog(int id)
         {
             SpecificBlogViewModel obj = new SpecificBlogViewModel();
+
             //LINQ diye join dite hobe  
             obj.ApprovedBlog = _context.ApprovedBlogs.Where(x=>x.Id == id).FirstOrDefault();
             obj.ApprovedBlog.Reactions = _context.PostReactions.Where(x=>x.PostId == id).ToList();

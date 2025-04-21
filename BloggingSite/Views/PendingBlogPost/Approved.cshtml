@@ -10,6 +10,11 @@ Posted Date: @Model.CreatedDate
 
 	<div class="col-md-4">
 	<form asp-action="Approved" asp-controller="PendingBlogPost" method="post">
+		<div>
+			<input type="hidden" asp-for="CreatedBy" value="@Model.CreatedBy" />
+			<input type="hidden" asp-for="CreatedDate" value="@Model.CreatedDate" />
+			<input type="hidden" asp-for="MyUserId" value="@Model.CreatedBy" />
+		</div>
 			<div class="form-group">	
 				<textarea asp-for="Content" readonly>@Model.Content</textarea>
 			</div>

@@ -20,7 +20,7 @@
         {
             <tr>
                 <td  width="600px"> @item.Content.Substring(0,10)</td>
-                <td> @DateOnly.FromDateTime(@item.CreatedDate)</td>
+                <td> @item.CreatedDate</td>
                 <td>
                     <a asp-action="SpecificBlog" asp-route-id="@item.Id" class="btn btn-primary">Read</a>
                 </td>
@@ -30,9 +30,9 @@
 </table>
 
 @if(Model.ApprovedBlogs.Count() > Model.ItemNumber){
-    <a asp-action="LoadMore" asp-controller="Home" asp-route-Number="@(Model.ItemNumber + 5)">Load More</a>
+    <a asp-action="LoadMore" asp-controller="Home" asp-route-Number="@(Model.ItemNumber + 5)" class="btn btn-primary">Load More</a>
 }
-else{
-    <a asp-action="LoadMore" asp-controller="Home" asp-route-Number="@(Model.ItemNumber - 10)">Load Less</a>
-}
+@* else{
+    <a asp-action="LoadMore" asp-controller="Home" asp-route-Number="@(Model.ItemNumber - 10)" class="btn btn-primary">Load Less</a>
+} *@
 
