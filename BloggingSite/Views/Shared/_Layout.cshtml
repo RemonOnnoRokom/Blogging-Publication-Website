@@ -25,13 +25,8 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="PendingBlogPost" asp-action="Index">PendingBlog</a>
-                            </li>
-                        }
-                        
+                        <partial name="_MyBlogs" />
+                       <partial name="_AdminPartial" />                        
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

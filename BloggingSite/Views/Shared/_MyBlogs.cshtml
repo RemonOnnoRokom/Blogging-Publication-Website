@@ -1,0 +1,8 @@
+﻿@using Microsoft.AspNetCore.Identity;
+
+@if(User.Identity.Name != null)
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="MyBlogs" asp-action="Index">MyBlogs</a>
+    </li>
+}
