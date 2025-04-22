@@ -36,6 +36,23 @@ namespace BloggingSite.Controllers
             return View(approvedBlogVM);
         }
 
-        
+        public async Task<IActionResult> Search(BlogStatus search ,int skip)
+        {
+            ApprovedBlogVM approvedBlogVM = new ApprovedBlogVM();
+            long id = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
+
+            bool res = _userManager.SupportsQueryableUsers;
+            if (skip > 0)
+            {
+                approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x => x.CreatedBy == id && x.CurrentStatus == search).Skip(skip - 5).Take(6).ToList();
+            }
+            else 
+            {
+                approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x => x.CreatedBy == id && x.CurrentStatus == search).Take(6).ToList();
+            }
+            approvedBlogVM.ItemNumber += skip;
+
+            return View(nameof(Index),approvedBlogVM);
+        }
     }
 }

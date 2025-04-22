@@ -8,6 +8,7 @@ using BlogginSite.Repositories.IRepository;
 using BlogginSite.Repositories.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace BloggingSite
 {
@@ -34,7 +35,7 @@ namespace BloggingSite
             .AddRoles<IdentityRole<long>>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
-
+            
             builder.Services.AddScoped<IPendingBlogService,PendingBlogService>();
 
             builder.Services.AddScoped<IApprovedBlogRepository,ApprovedBlogRepository>();

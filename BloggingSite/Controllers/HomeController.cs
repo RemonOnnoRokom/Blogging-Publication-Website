@@ -6,6 +6,7 @@ using BlogginSite.Repositories.Db;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace BloggingSite.Controllers
@@ -60,16 +61,16 @@ namespace BloggingSite.Controllers
             obj.ApprovedBlog = _context.ApprovedBlogs.Where(x=>x.Id == id).FirstOrDefault();
             obj.ApprovedBlog.Reactions = _context.PostReactions.Where(x=>x.PostId == id).ToList();
             obj.ApprovedBlog.PostComments = _context.PostComments.Join(_userManager.Users, 
-                                                                        Comments => Comments.MyUserId,
-                                                                        Commentator => Commentator.Id,
-                                                                        (Comments,Commentator) => new CommentsVM()
-                                                                                                 {
-                                                                                                        Id= Comments.Id,
-                                                                                                        Name = Commentator.Name,
-                                                                                                        PostId =Comments.PostId,
-                                                                                                        Comment = Comments.Comment
-                                                                                                 }
-                                                                        ).Where(x => x.PostId == id).ToList();
+                                                Comments => Comments.MyUserId,
+                                                Commentator => Commentator.Id,
+                                                (Comments,Commentator) => new CommentsVM()
+                                                                            {
+                                                                                Id= Comments.Id,
+                                                                                Name = Commentator.Name,
+                                                                                PostId =Comments.PostId,
+                                                                                Comment = Comments.Comment
+                                                                            }
+                                                ).Where(x => x.PostId == id).ToList();
             if(User.Identity.Name == null)
             {
                 obj.UserId = -1;
@@ -86,6 +87,7 @@ namespace BloggingSite.Controllers
         [Authorize]
         public IActionResult CreateNewBlog()
         {
+            
             return View();
         }
 
