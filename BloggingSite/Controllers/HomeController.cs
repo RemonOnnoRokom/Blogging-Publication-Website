@@ -41,7 +41,7 @@ namespace BloggingSite.Controllers
             var list = _context.ApprovedBlogs.Where(x => x.CurrentStatus == BlogStatus.Approved).Skip(Number - 5 ).Take(6).ToList();
 
             approvedBlogVM.ApprovedBlogs = list;
-            approvedBlogVM.ItemNumber += 5;
+            approvedBlogVM.ItemNumber = Number;
             
             return View(nameof(Index),approvedBlogVM);
         }

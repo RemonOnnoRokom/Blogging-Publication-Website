@@ -4,6 +4,7 @@ using BlogginSite.Repositories.Db;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BloggingSite.Controllers
 {
@@ -28,11 +29,18 @@ namespace BloggingSite.Controllers
             return View(approvedBlogVM);
         }
 
-        public IActionResult LoadMore(int skip)
+        public async Task< IActionResult> LoadMore(int skip)
         {
+            ApprovedBlogVM approvedBlogVM = new ApprovedBlogVM();
 
+            long id = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
+            ///.Skip(Model.ItemNumber - 5 ).Take(5)
+            var list = _context.ApprovedBlogs.Where(x => x.CreatedBy == id).Skip(skip - 5).Take(6).ToList();
 
-            return View();
+            approvedBlogVM.ApprovedBlogs = list;
+            approvedBlogVM.ItemNumber += skip;
+
+            return View(nameof(Index), approvedBlogVM);
         }
     }
 }
