@@ -1,0 +1,37 @@
+﻿@model ApprovedBlogVM
+
+@{
+    ViewData["Title"] = "MyBlog";
+}
+
+<p>
+    <a asp-action="CreateNewBlog" asp-controller="Home" class="btn btn-primary">Publish New Blog</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th width="600px">Content</th>
+            <th>CreatedDate </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model.ApprovedBlogs)
+        {            
+            <tr>
+                <td  width="600px"> @item.Content.Substring(0,10)</td>
+                <td> @item.CreatedDate</td>
+                <td><a asp-action="SpecificBlog" asp-route-id="@item.Id" class="btn btn-success">See More</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.ApprovedBlogs.Count() > 5)
+{
+    <a asp-action="Index"  asp-controller="MyBlog" asp-route-skip="@(Model.ItemNumber + 5 )" class="btn btn-primary">Load More</a>
+}
+@* else{
+    <a asp-action="LoadMore" asp-controller="Home" asp-route-Number="@(Model.ItemNumber - 10)" class="btn btn-primary">Load Less</a>
+} *@
+
