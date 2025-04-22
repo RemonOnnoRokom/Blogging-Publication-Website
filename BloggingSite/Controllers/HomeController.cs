@@ -26,10 +26,16 @@ namespace BloggingSite.Controllers
         {
             ApprovedBlogVM approvedBlogVM = new ApprovedBlogVM();
 
-            var list = _context.ApprovedBlogs.Where(x=>x.CurrentStatus == BlogStatus.Approved).Skip(skip).Take(6).ToList();
-
-            approvedBlogVM.ApprovedBlogs = list;
-            approvedBlogVM.ItemNumber = 5;
+            if (skip > 0)
+            {
+               approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x => x.CurrentStatus == BlogStatus.Approved).Skip(skip - 5).Take(6).ToList();
+            }
+            else
+            {
+               approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x => x.CurrentStatus == BlogStatus.Approved).Skip(skip).Take(6).ToList();
+            }
+        
+            approvedBlogVM.ItemNumber = skip;
 
             return View(approvedBlogVM);
         }
