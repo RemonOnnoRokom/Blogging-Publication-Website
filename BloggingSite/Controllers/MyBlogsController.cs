@@ -18,31 +18,24 @@ namespace BloggingSite.Controllers
             _context = context;
             _userManager = userManager;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int skip = 0 )
         {
             ApprovedBlogVM approvedBlogVM = new ApprovedBlogVM();
             long id = ( await _userManager.FindByNameAsync(User.Identity.Name)).Id;
 
-
-
-            approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x=>x.CreatedBy == id).Take(6).ToList();
-            approvedBlogVM.ItemNumber = 5;
+            if (skip > 0)
+            {
+                approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x => x.CreatedBy == id).Skip(skip - 5).Take(6).ToList();
+            }
+            else
+            {
+                approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x => x.CreatedBy == id).Take(6).ToList();
+            }                       
+            approvedBlogVM.ItemNumber += skip;
 
             return View(approvedBlogVM);
         }
 
-        public async Task< IActionResult> LoadMore(int skip)
-        {
-            ApprovedBlogVM approvedBlogVM = new ApprovedBlogVM();
-
-            long id = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
-            ///.Skip(Model.ItemNumber - 5 ).Take(5)
-            var list = _context.ApprovedBlogs.Where(x => x.CreatedBy == id).Skip(skip - 5).Take(6).ToList();
-
-            approvedBlogVM.ApprovedBlogs = list;
-            approvedBlogVM.ItemNumber += skip;
-
-            return View(nameof(Index), approvedBlogVM);
-        }
+        
     }
 }
