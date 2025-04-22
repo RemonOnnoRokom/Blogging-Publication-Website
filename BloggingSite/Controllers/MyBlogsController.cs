@@ -23,6 +23,8 @@ namespace BloggingSite.Controllers
             ApprovedBlogVM approvedBlogVM = new ApprovedBlogVM();
             long id = ( await _userManager.FindByNameAsync(User.Identity.Name)).Id;
 
+
+
             approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x=>x.CreatedBy == id).Take(6).ToList();
             approvedBlogVM.ItemNumber = 5;
 

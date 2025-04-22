@@ -4,11 +4,22 @@
     ViewData["Title"] = "MyBlog";
 }
 
+<form asp-controller="MyBlogs" asp-action="Search" style="display:inline-block">
+    <div class="d-flex gap-2" style="margin-bottom: 20px;">
+        <span>
+            <select asp-items="Html.GetEnumSelectList<BlogStatus>()" class="form-control" name="search">
+                <option value="">Search</option>
+            </select>
+        </span>
+       
+        <button class="g-3" type="submit" value="Search"><i class="bi bi-search"></i></button>
+    </div>
+  
+</form>
 
-
-<p>
+<div style="margin-bottom: 20px;">
     <a asp-action="CreateNewBlog" asp-controller="Home" class="btn btn-primary">Publish New Blog</a>
-</p>
+</div>
 <table class="table">
     <thead>
         <tr>
