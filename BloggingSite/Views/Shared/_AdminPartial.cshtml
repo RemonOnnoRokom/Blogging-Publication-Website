@@ -2,10 +2,15 @@
 
 @if (User.IsInRole("Admin"))
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="PendingBlogPost" asp-action="Index">PendingBlog</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Top5Blogs" asp-action="PendingBlogPost"></a>
-    </li>
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle text-black" data-bs-toggle="dropdown" aria-expanded="false" >Administration</a>
+		<ul class="dropdown-menu">
+			<li class="nav-item">
+				<a class="nav-link text-dark" asp-area="" asp-controller="PendingBlogPost" asp-action="Index">PendingBlog</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-dark" asp-area="" asp-controller="Top5Blogs" asp-action="PendingBlogPost">Top 5</a>
+			</li>
+		</ul>
+	</li>   
 }
