@@ -21,16 +21,16 @@ namespace BloggingSite.Controllers
         public async Task<IActionResult> Index(int skip = 0 )
         {
             ApprovedBlogVM approvedBlogVM = new ApprovedBlogVM();
+
             long id = ( await _userManager.FindByNameAsync(User.Identity.Name)).Id;
+            var searcherObj = _context.ApprovedBlogs.Where(x => x.CreatedBy == id);
 
             if (skip > 0)
             {
-                approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x => x.CreatedBy == id).Skip(skip - 5).Take(6).ToList();
+                searcherObj = searcherObj.Skip(skip - 5 );
             }
-            else
-            {
-                approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x => x.CreatedBy == id).Take(6).ToList();
-            }                       
+
+            approvedBlogVM.ApprovedBlogs = searcherObj.Take(6).ToList();
             approvedBlogVM.ItemNumber += skip;
 
             return View(approvedBlogVM);
@@ -38,18 +38,21 @@ namespace BloggingSite.Controllers
 
         public async Task<IActionResult> Search(BlogStatus search ,int skip)
         {
+            if(search == BlogStatus.None)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             ApprovedBlogVM approvedBlogVM = new ApprovedBlogVM();
-            long id = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
 
-            bool res = _userManager.SupportsQueryableUsers;
+            long id = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
+            var obj = _context.ApprovedBlogs.Where(x => x.CreatedBy == id && x.CurrentStatus == search);
+
             if (skip > 0)
             {
-                approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x => x.CreatedBy == id && x.CurrentStatus == search).Skip(skip - 5).Take(6).ToList();
+                obj = obj.Skip(skip - 5);
             }
-            else 
-            {
-                approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x => x.CreatedBy == id && x.CurrentStatus == search).Take(6).ToList();
-            }
+
+            approvedBlogVM.ApprovedBlogs = obj.Take(6).ToList();            
             approvedBlogVM.ItemNumber += skip;
 
             return View(nameof(Index),approvedBlogVM);
