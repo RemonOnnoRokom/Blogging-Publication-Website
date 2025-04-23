@@ -1,14 +1,16 @@
 ﻿using BloggingSite.Models.Entities;
 using BloggingSite.Models.LoginRegistration;
+using BloggingSite.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BloggingSite.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     public class AccountController : Controller
     {
+        
         private readonly SignInManager<MyUser> _signInManager;
         private readonly UserManager<MyUser> _userManager;
         public AccountController(SignInManager<MyUser> signInManager, UserManager<MyUser> userManager)
@@ -16,14 +18,12 @@ namespace BloggingSite.Controllers
             _signInManager = signInManager;
             _userManager = userManager;
         }
-
-        [AllowAnonymous]
+        
         public IActionResult LogIn()
         {
             return View();
         }
-
-        [AllowAnonymous]
+        
         [HttpPost]
         public async Task<IActionResult> LogIn(LoginVM model)
         {
@@ -47,17 +47,15 @@ namespace BloggingSite.Controllers
         {
             //await base.OnInitializedAsync();
             await _signInManager.SignOutAsync();
+
             return RedirectToAction("Index", "Home");
-
         }
-
-        [AllowAnonymous]
+        
         public IActionResult Register()
         {
             return View();
         }
-
-        [AllowAnonymous]
+        
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM model)
         {
@@ -86,6 +84,25 @@ namespace BloggingSite.Controllers
 
             }
             return View(model);
+        }
+
+        [Authorize]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordVM obj)
+        {
+            var person = await _userManager.FindByNameAsync(User.Identity.Name);
+            var result = _userManager.ChangePasswordAsync(person, obj.CurrentPassword, obj.NewPassword);
+            if (result.Result.Succeeded)
+            {
+                return RedirectToAction(nameof(Index), "Home");
+            }
+            return View(obj);
         }
     }
 }
