@@ -13,7 +13,7 @@ namespace BloggingSite.Controllers
     public class PendingBlogPostController : Controller
     {
         private readonly IPendingBlogService _service;
-        private UserManager<MyUser> _userManager;
+        private readonly UserManager<MyUser> _userManager;
         public PendingBlogPostController(IPendingBlogService service , UserManager<MyUser> userManager)
         {
             _service = service;
@@ -49,5 +49,24 @@ namespace BloggingSite.Controllers
 
            return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Top5Blogs([FromServices] ApplicationDbContext context)
+        {
+            int skipBlogs = 0 ;
+            int numberOfTopBlog = 5;
+
+            var ids = await context.Database.SqlQuery<TopBlogVM>($"select [approvedBlogs].[Id] , [ApprovedBlogs].[Content]  From [ApprovedBlogs]\r\n INNER JOIN [PostComments] \r\n\ton [ApprovedBlogs].[Id] = [PostComments].[PostId]\r\nINNER JOIN [PostReactions]\r\n\ton [ApprovedBlogs].[Id] = [PostReactions].[PostId] \r\n\tgroup by [approvedBlogs].[Id], [ApprovedBlogs].[Content] order by [approvedBlogs].[Id] desc\r\n\tOFFSET {skipBlogs} ROWs \r\n\tFETCH Next  {numberOfTopBlog} rows only").ToListAsync();
+
+            return View(ids);
+        }
     }
 }
+
+//select approvedBlogs.Id, ApprovedBlogs.Content From ApprovedBlogs 
+// INNER JOIN PostComments 
+//	on ApprovedBlogs.Id = PostComments.PostId
+//INNER JOIN PostReactions
+//	on ApprovedBlogs.Id = PostReactions.PostId 
+//	group by approvedBlogs.Id, ApprovedBlogs.Content order by Id desc
+//	OFFSET 1 ROWs 
+//	FETCH Next  5 rows only;

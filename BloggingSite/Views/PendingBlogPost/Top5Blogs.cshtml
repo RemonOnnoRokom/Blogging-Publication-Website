@@ -1,0 +1,28 @@
+﻿@model List<TopBlogVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Pending Blogs</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Content</th> 
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td> @item.Content.Substring(0, 10)</td>                
+                <td>
+                    <a asp-controller="Home" asp-action="SpecificBlog" asp-route-id="@item.Id" class="btn btn-success">See More</a>                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

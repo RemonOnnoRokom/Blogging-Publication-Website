@@ -11,7 +11,7 @@ namespace BloggingSite.Controllers
     public class BlogPostReactionController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private UserManager<MyUser> _userManager;
+        private readonly UserManager<MyUser> _userManager;
         public BlogPostReactionController(ApplicationDbContext context , UserManager<MyUser> userManager)
         {
             _context = context;
@@ -66,7 +66,7 @@ namespace BloggingSite.Controllers
         {
             if(Obj.Comment is not null)
             {
-                Obj.MyUserId = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
+                Obj.MyUserId = (await _userManager.FindByNameAsync(User.Identity.Name))!.Id;
                 _context.PostComments.Add(Obj);
                 _context.SaveChanges();
             }
