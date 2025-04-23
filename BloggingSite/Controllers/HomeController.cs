@@ -23,35 +23,15 @@ namespace BloggingSite.Controllers
             _userManager = userManager; 
         }
 
-        public IActionResult Index(int skip = 0)
+        public IActionResult Index(int skip = 5)
         {
             ApprovedBlogVM approvedBlogVM = new ApprovedBlogVM();
 
-            if (skip > 0)
-            {
-               approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x => x.CurrentStatus == BlogStatus.Approved).Skip(skip - 5).Take(6).ToList();
-            }
-            else
-            {
-               approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x => x.CurrentStatus == BlogStatus.Approved).Skip(skip).Take(6).ToList();
-            }
-        
+            approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x => x.CurrentStatus == BlogStatus.Approved).Skip(skip - 5).Take(6).ToList(); 
             approvedBlogVM.ItemNumber = skip;
 
             return View(approvedBlogVM);
-        }
-
-        public IActionResult LoadMore(int Number)
-        {
-            ApprovedBlogVM approvedBlogVM = new ApprovedBlogVM();
-            ///.Skip(Model.ItemNumber - 5 ).Take(5)
-            var list = _context.ApprovedBlogs.Where(x => x.CurrentStatus == BlogStatus.Approved).Skip(Number - 5 ).Take(6).ToList();
-
-            approvedBlogVM.ApprovedBlogs = list;
-            approvedBlogVM.ItemNumber = Number;
-            
-            return View(nameof(Index),approvedBlogVM);
-        }
+        }        
 
         public async Task<IActionResult> SpecificBlog(int id)
         {
