@@ -37,8 +37,8 @@ namespace BloggingSite.Services.Service
             Obj.Content = entity.Content;
             Obj.CreatedDate = entity.CreatedDate;
             Obj.PublishedDate = DateTime.Now;
-            Obj.Content = entity.Content;
-            Obj.CreatedDate = entity.CreatedDate;
+            //Obj.Content = entity.Content;
+            //Obj. = entity.CreatedDate;
             Obj.CurrentStatus = BlogStatus.Approved;
             Obj.MyUserId = entity.CreatedBy;
 
