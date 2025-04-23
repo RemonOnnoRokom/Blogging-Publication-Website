@@ -8,7 +8,8 @@ namespace BloggingSite.Models.Entities
 {
     public enum  BlogStatus
     {
-        Create=0,
+        None=0,
+        Create,
         Approved
     }
 }
