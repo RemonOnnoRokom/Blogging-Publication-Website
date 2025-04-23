@@ -9,6 +9,7 @@ namespace BloggingSite.Models.ViewModel
 {
     public class ApprovedBlogVM
     {
+       
         public IEnumerable<ApprovedBlog> ApprovedBlogs { get; set; }
         public int ItemNumber { get; set; }
     }

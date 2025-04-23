@@ -73,9 +73,8 @@ namespace BloggingSite.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false);
+
                     return RedirectToAction("Index", "Home");
-
-
                 }
                 foreach (var error in result.Errors)
                 {
