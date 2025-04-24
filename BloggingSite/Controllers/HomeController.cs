@@ -44,12 +44,12 @@ namespace BloggingSite.Controllers
                                                 Comments => Comments.MyUserId,
                                                 Commentator => Commentator.Id,
                                                 (Comments,Commentator) => new CommentsVM()
-                                                                            {
-                                                                                Id= Comments.Id,
-                                                                                Name = Commentator.Name,
-                                                                                PostId =Comments.PostId,
-                                                                                Comment = Comments.Comment
-                                                                            }
+                                                {
+                                                    Id= Comments.Id,
+                                                    Name = Commentator.Name,
+                                                    PostId =Comments.PostId,
+                                                    Comment = Comments.Comment
+                                                }
                                                 ).Where(x => x.PostId == id).ToList();
             if(User.Identity.Name == null)
             {
@@ -60,7 +60,6 @@ namespace BloggingSite.Controllers
                 obj.UserId = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
             }
             
-
             return View(obj);
         }
 

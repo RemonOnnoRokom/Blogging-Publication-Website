@@ -18,7 +18,7 @@ namespace BloggingSite.Controllers
             _context = context;
             _userManager = userManager;
         }
-        public async Task<IActionResult> Index(int skip = 0 )
+        public async Task<IActionResult> Index(int skip = 5 )
         {
             ApprovedBlogVM approvedBlogVM = new ApprovedBlogVM();
 
@@ -38,6 +38,7 @@ namespace BloggingSite.Controllers
 
         public async Task<IActionResult> Search(BlogStatus search ,int skip)
         {
+            ViewData["PreSearched"] = (BlogStatus)search;
             if(search == BlogStatus.None)
             {
                 return RedirectToAction(nameof(Index));
@@ -46,7 +47,6 @@ namespace BloggingSite.Controllers
 
             long id = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
             var obj = _context.ApprovedBlogs.Where(x => x.CreatedBy == id && x.CurrentStatus == search);
-
             if (skip > 0)
             {
                 obj = obj.Skip(skip - 5);

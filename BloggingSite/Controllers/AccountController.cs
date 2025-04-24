@@ -35,7 +35,7 @@ namespace BloggingSite.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-
+               
                 ModelState.AddModelError("", "Invalid login attempt");
                 return View(model);
             }

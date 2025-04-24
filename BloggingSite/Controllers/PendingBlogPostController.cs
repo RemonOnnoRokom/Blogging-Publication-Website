@@ -60,11 +60,31 @@ namespace BloggingSite.Controllers
             return View(ids);
         }
 
-        public IActionResult UserList()
+        public async Task<IActionResult> UserList([FromServices]ApplicationDbContext context)
         {
-            List<MyUser> list = _userManager.Users.ToList();
+            List<MyUser> list;
+            list = context.Users.Where(x => context.UserRoles.Any(y=> y.UserId == x.Id) == false).ToList();
+            
             return View(list);
+        }
+
+        public async Task<IActionResult> Permission(int id)
+        {
+            MyUser obj = await _userManager.FindByIdAsync(Convert.ToString(id));
+            if (obj.LockoutEnd is null)
+            {
+                obj.LockoutEnd ??= DateTimeOffset.Now.AddMinutes(120 * 1440);
+            }
+            else
+            {
+                obj.LockoutEnd = null;
+            }
+            
+            IdentityResult result = await _userManager.UpdateAsync(obj);
+
+            return RedirectToAction(nameof(UserList));
         }
     }
 }
+
 
