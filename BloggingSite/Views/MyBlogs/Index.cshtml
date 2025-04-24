@@ -8,7 +8,7 @@
     <div class="d-flex gap-2" style="margin-bottom: 20px;">
         <span>
             <select asp-items="Html.GetEnumSelectList<BlogStatus>()" class="form-control" name="search">
-                <option value="">Search</option>
+                <option>@ViewData["PreSearched"]</option>
             </select>
         </span>
        
@@ -40,10 +40,17 @@
     </tbody>
 </table>
 
-@if (Model.ApprovedBlogs.Count() > 5)
-{
-    <a asp-action="Index" asp-controller="MyBlogs" asp-route-skip="@(Model.ItemNumber + 5 )" class="btn btn-primary">Load More</a>
+@if (Model.ApprovedBlogs.Count() > 5){
+    if (ViewData["PreSearched"] != null)
+    {
+        <a asp-action="Search" asp-controller="MyBlogs" asp-route-search="@ViewData["PreSearched"]" asp-route-skip="@(Model.ItemNumber + 5 )" class="btn btn-primary">Load More</a>
+    }
+    else{
+        <a asp-action="Index" asp-controller="MyBlogs" asp-route-skip="@(Model.ItemNumber + 5 )" class="btn btn-primary">Load More</a>
+    }
+    
 }
+    
 @* else{
     <a asp-action="LoadMore" asp-controller="Home" asp-route-Number="@(Model.ItemNumber - 10)" class="btn btn-primary">Load Less</a>
 } *@
