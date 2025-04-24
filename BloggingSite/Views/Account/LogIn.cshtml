@@ -25,18 +25,17 @@
 					<!-- <input type="checkbox" asp-for="RememberMe" value="false" type="hidden" />--->
 					<label asp-for="RememberMe"></label>
 				</div>
-
+				
 				<div class="row">
 					<div class="col-4">
 						<input type="submit" value="LogIn" class="btn btn-primary" />
 					</div>
 				</div>
-
-			</form>
+			</form>	
+			<div asp-validation-summary="All" class="text-danger"></div>
 		</div>
-	</div>
+	</div>	
 </div>
-
 @section Scripts {
 	@{
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
