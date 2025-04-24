@@ -59,6 +59,12 @@ namespace BloggingSite.Controllers
 
             return View(ids);
         }
+
+        public IActionResult UserList()
+        {
+            List<MyUser> list = _userManager.Users.ToList();
+            return View(list);
+        }
     }
 }
 
