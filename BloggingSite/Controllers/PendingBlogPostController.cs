@@ -62,33 +62,3 @@ namespace BloggingSite.Controllers
     }
 }
 
-//select approvedBlogs.Id, ApprovedBlogs.Content From ApprovedBlogs 
-// INNER JOIN PostComments 
-//	on ApprovedBlogs.Id = PostComments.PostId
-//INNER JOIN PostReactions
-//	on ApprovedBlogs.Id = PostReactions.PostId 
-//	group by approvedBlogs.Id, ApprovedBlogs.Content order by Id desc
-//	OFFSET 1 ROWs 
-//	FETCH Next  5 rows only;
-
-
-//select  [a].[Id] , [a].[Content]  
-//from((select ApprovedBlogs.Id , ApprovedBlogs.Content   From ApprovedBlogs inner join  PostComments on ApprovedBlogs.Id =PostComments.PostId) 
-//union all
-//		(select ApprovedBlogs.Id , ApprovedBlogs.Content   From ApprovedBlogs 
-//			inner join  PostReactions
-//			on ApprovedBlogs.Id =PostReactions.PostId
-//		)
-//) 
-//		as a group by a.Id , a.Content  order by count(a.Id) desc;select  [a].[Id] , [a].[Content]  
-//from(
-//		(select ApprovedBlogs.Id , ApprovedBlogs.Content   From ApprovedBlogs 
-//					inner join  PostComments
-//					on ApprovedBlogs.Id =PostComments.PostId) 
-//union all
-//		(select ApprovedBlogs.Id , ApprovedBlogs.Content   From ApprovedBlogs 
-//			inner join  PostReactions
-//			on ApprovedBlogs.Id =PostReactions.PostId
-//		)
-//) 
-//		as a group by a.Id , a.Content  order by count(a.Id) desc;
