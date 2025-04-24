@@ -55,7 +55,7 @@ namespace BloggingSite.Controllers
             int skipBlogs = 0 ;
             int numberOfTopBlog = 5;
 
-            var ids = await context.Database.SqlQuery<TopBlogVM>($"select [approvedBlogs].[Id] , [ApprovedBlogs].[Content]  From [ApprovedBlogs]\r\n INNER JOIN [PostComments] \r\n\ton [ApprovedBlogs].[Id] = [PostComments].[PostId]\r\nINNER JOIN [PostReactions]\r\n\ton [ApprovedBlogs].[Id] = [PostReactions].[PostId] \r\n\tgroup by [approvedBlogs].[Id], [ApprovedBlogs].[Content] order by [approvedBlogs].[Id] desc\r\n\tOFFSET {skipBlogs} ROWs \r\n\tFETCH Next  {numberOfTopBlog} rows only").ToListAsync();
+            var ids = await context.Database.SqlQuery<TopBlogVM>($"select  [a].[Id] , [a].[Content]  \r\n from((select ApprovedBlogs.Id , ApprovedBlogs.Content   From ApprovedBlogs inner join  PostComments on ApprovedBlogs.Id =PostComments.PostId) \r\n union all\r\n\t\t(select ApprovedBlogs.Id , ApprovedBlogs.Content   From ApprovedBlogs \r\n\t\t\tinner join  PostReactions\r\n\t\t\ton ApprovedBlogs.Id =PostReactions.PostId\r\n\t\t)\r\n) \r\n\t\tas a group by a.Id , a.Content  order by count(a.Id) desc;select  [a].[Id] , [a].[Content]  \r\nfrom(\r\n\t\t(select ApprovedBlogs.Id , ApprovedBlogs.Content   From ApprovedBlogs \r\n\t\t\t\t\tinner join  PostComments\r\n\t\t\t\t\ton ApprovedBlogs.Id =PostComments.PostId) \r\nunion all\r\n\t\t(select ApprovedBlogs.Id , ApprovedBlogs.Content   From ApprovedBlogs \r\n\t\t\tinner join  PostReactions\r\n\t\t\ton ApprovedBlogs.Id =PostReactions.PostId\r\n\t\t)\r\n) \r\n\t\tas a group by a.Id , a.Content  order by count(a.Id) desc OFFSET {skipBlogs} ROWs \r\n\tFETCH Next  {numberOfTopBlog - 1} rows only").ToListAsync();
 
             return View(ids);
         }
@@ -70,3 +70,25 @@ namespace BloggingSite.Controllers
 //	group by approvedBlogs.Id, ApprovedBlogs.Content order by Id desc
 //	OFFSET 1 ROWs 
 //	FETCH Next  5 rows only;
+
+
+//select  [a].[Id] , [a].[Content]  
+//from((select ApprovedBlogs.Id , ApprovedBlogs.Content   From ApprovedBlogs inner join  PostComments on ApprovedBlogs.Id =PostComments.PostId) 
+//union all
+//		(select ApprovedBlogs.Id , ApprovedBlogs.Content   From ApprovedBlogs 
+//			inner join  PostReactions
+//			on ApprovedBlogs.Id =PostReactions.PostId
+//		)
+//) 
+//		as a group by a.Id , a.Content  order by count(a.Id) desc;select  [a].[Id] , [a].[Content]  
+//from(
+//		(select ApprovedBlogs.Id , ApprovedBlogs.Content   From ApprovedBlogs 
+//					inner join  PostComments
+//					on ApprovedBlogs.Id =PostComments.PostId) 
+//union all
+//		(select ApprovedBlogs.Id , ApprovedBlogs.Content   From ApprovedBlogs 
+//			inner join  PostReactions
+//			on ApprovedBlogs.Id =PostReactions.PostId
+//		)
+//) 
+//		as a group by a.Id , a.Content  order by count(a.Id) desc;
