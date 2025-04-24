@@ -31,6 +31,7 @@ namespace BloggingSite
                                 optn.Password.RequireUppercase = false;
                                 optn.Password.RequireNonAlphanumeric = false;
                                 optn.Password.RequireLowercase = false;
+                                optn.Lockout.DefaultLockoutTimeSpan = TimeSpan.Zero;
                             })
             .AddRoles<IdentityRole<long>>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
