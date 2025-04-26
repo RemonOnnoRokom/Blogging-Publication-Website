@@ -14,15 +14,16 @@ namespace BlogginSite.Repositories.Repository
     public class ApprovedBlogRepository : IApprovedBlogRepository
     {
         private readonly ApplicationDbContext _context;
+
         public ApprovedBlogRepository(ApplicationDbContext context)
         {
             _context = context;
         }
+
         public async Task AddAsync(ApprovedBlog entity)
         {
              _context.ApprovedBlogs.Add(entity);
-            await _context.SaveChangesAsync();
-           
+            await _context.SaveChangesAsync();           
         }
 
         public async Task DeleteAsync(int id)
@@ -38,17 +39,32 @@ namespace BlogginSite.Repositories.Repository
             return list;
         }
             
-
         public ApprovedBlog GetByIdAsync(int id)
         {
-            var obj = _context.ApprovedBlogs.Where(x => x.Id == id).FirstOrDefault();
-            return obj;
+            try
+            {
+                var obj =_context.ApprovedBlogs.Where(x => x.Id == id).AsNoTracking().FirstOrDefault();
+                return obj;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }           
         }
 
         public void Update(ApprovedBlog entity)
         {
-            _context.ApprovedBlogs.Update(entity);
-            _context.SaveChanges();
+            try
+            {               
+                 _context.ApprovedBlogs.Update(entity);
+                  _context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}");
+            }
+           
         }
     }
 }
