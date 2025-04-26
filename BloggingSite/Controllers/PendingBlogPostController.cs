@@ -3,6 +3,7 @@ using BloggingSite.Models.ViewModel;
 using BloggingSite.Services.IService;
 using BlogginSite.Repositories.Db;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,24 +29,24 @@ namespace BloggingSite.Controllers
         }
 
         public async Task<IActionResult> Delete(int id)
-        {
+         {
              await _service.DeleteAsync(id);
 
             return RedirectToAction("Index");
         }
-
-        public async Task<IActionResult> Approved(int id)
+       
+        public async Task<IActionResult> SeeMore(int id)
         {
             var obj = await _service.GetByIdAsync(id);
 
-            return View(obj);
+            return View(nameof(Approved),obj);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Approved(PendingBlog Obj)
+        
+        public async Task<IActionResult> Approved([Bind("PostId,AdminStatus")]AdminApprovedVM obj)
         {
-            long id = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
-           _service.Approved(Obj,id);
+            obj.AdminId = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
+            _service.Approved(obj);
 
            return RedirectToAction(nameof(Index));
         }
