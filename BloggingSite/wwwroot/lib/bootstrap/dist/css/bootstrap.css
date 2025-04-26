@@ -762,18 +762,18 @@ progress {
 }
 @media (min-width: 992px) {
   .container-lg, .container-md, .container-sm, .container {
-    max-width: 960px;
+    max-width: 100%;
   }
 }
 @media (min-width: 1200px) {
-  .container-xl, .container-lg, .container-md, .container-sm, .container {
-    max-width: 1140px;
-  }
+    .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: 100%;
+    }
 }
 @media (min-width: 1400px) {
-  .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
-    max-width: 1320px;
-  }
+    .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: 100%;
+    }
 }
 :root {
   --bs-breakpoint-xs: 0;
