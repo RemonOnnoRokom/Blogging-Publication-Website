@@ -7,8 +7,8 @@ namespace BloggingSite.Controllers
 {
     public class RoleController : Controller
     {
-        private RoleManager<IdentityRole<long>> _roleManager;
-        private UserManager<MyUser> _userManager;
+        private readonly RoleManager<IdentityRole<long>> _roleManager;
+        private readonly UserManager<MyUser> _userManager;
 
         public RoleController(RoleManager<IdentityRole<long>> roleManger , UserManager<MyUser> userManager)
         {

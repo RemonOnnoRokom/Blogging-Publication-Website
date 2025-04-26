@@ -27,7 +27,7 @@ namespace BlogginSite.Repositories.Repository
 
         public async Task DeleteAsync(int id)
         {
-            var obj = await GetByIdAsync(id);
+            var obj = GetByIdAsync(id);
             _context.ApprovedBlogs.Remove(obj);
             await _context.SaveChangesAsync();
         }
@@ -39,11 +39,10 @@ namespace BlogginSite.Repositories.Repository
         }
             
 
-        public async Task<ApprovedBlog> GetByIdAsync(int id)
+        public ApprovedBlog GetByIdAsync(int id)
         {
-           var Obj = await _context.ApprovedBlogs.Where(x => x.Id == id).FirstOrDefaultAsync();
-
-            return Obj;
+            var obj = _context.ApprovedBlogs.Where(x => x.Id == id).FirstOrDefault();
+            return obj;
         }
 
         public void Update(ApprovedBlog entity)

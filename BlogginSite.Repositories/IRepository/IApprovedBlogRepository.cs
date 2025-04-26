@@ -12,7 +12,7 @@ namespace BlogginSite.Repositories.IRepository
     public interface IApprovedBlogRepository
     {
         Task<List<ApprovedBlog>> GetAllAsync();
-        Task<ApprovedBlog> GetByIdAsync(int id);
+        ApprovedBlog GetByIdAsync(int id);
         Task AddAsync(ApprovedBlog entity);
         void Update(ApprovedBlog entity);
         Task DeleteAsync(int id);

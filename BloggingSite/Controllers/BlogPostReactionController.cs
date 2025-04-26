@@ -7,11 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BloggingSite.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="Admin,User")]
     public class BlogPostReactionController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<MyUser> _userManager;
+
         public BlogPostReactionController(ApplicationDbContext context , UserManager<MyUser> userManager)
         {
             _context = context;
@@ -37,8 +38,7 @@ namespace BloggingSite.Controllers
                 {
                     persistOrNot.Expression = expression;
                     Update(persistOrNot);
-                }
-                
+                }                
             }
             else
             {
@@ -49,14 +49,13 @@ namespace BloggingSite.Controllers
             return  RedirectToAction($"SpecificBlog","Home",new { id = Obj.PostId });      
         }
 
-        public  void Update(BlogPostReaction Obj)
+        private void Update(BlogPostReaction Obj)
         {
              _context.PostReactions.Update(Obj);
-             _context.SaveChanges();
-            
+             _context.SaveChanges();            
         }
 
-        public void Delete(BlogPostReaction Obj)
+        private void Delete(BlogPostReaction Obj)
         {
             _context.PostReactions.Remove(Obj);
             _context.SaveChanges();

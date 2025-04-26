@@ -30,7 +30,7 @@ namespace BloggingSite.Services.Service
 
         public async Task Approved(AdminApprovedVM obj)
         {            
-            var dbObj = await _repository.GetByIdAsync(obj.PostId);
+            var dbObj =  _repository.GetByIdAsync(obj.PostId);
             dbObj.CurrentStatus = obj.AdminStatus;
             dbObj.ApprovedBy = obj.AdminId;
 
@@ -62,7 +62,7 @@ namespace BloggingSite.Services.Service
 
         public async Task<PendingBlog> GetByIdAsync(int id)
         {
-            ApprovedBlog Obj =  await _repository.GetByIdAsync(id);
+            ApprovedBlog Obj = _repository.GetByIdAsync(id);
 
             PendingBlog result = null;
             if(Obj.CurrentStatus == BlogStatus.Create)
