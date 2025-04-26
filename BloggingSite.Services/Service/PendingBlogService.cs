@@ -28,21 +28,13 @@ namespace BloggingSite.Services.Service
             await _repository.AddAsync(Obj);                            
         }
 
-        public void Approved(PendingBlog entity , long approvedId )
-        {
-            ApprovedBlog Obj = new ApprovedBlog();
-            Obj.Id= entity.Id;
-            Obj.ApprovedBy = approvedId;
-            Obj.CreatedBy = entity.CreatedBy;
-            Obj.Content = entity.Content;
-            Obj.CreatedDate = entity.CreatedDate;
-            Obj.PublishedDate = DateTime.Now;
-            //Obj.Content = entity.Content;
-            //Obj. = entity.CreatedDate;
-            Obj.CurrentStatus = BlogStatus.Approved;
-            Obj.MyUserId = entity.CreatedBy;
+        public async Task Approved(AdminApprovedVM obj)
+        {            
+            var dbObj = await _repository.GetByIdAsync(obj.PostId);
+            dbObj.CurrentStatus = obj.AdminStatus;
+            dbObj.ApprovedBy = obj.AdminId;
 
-            _repository.Update(Obj);
+            _repository.Update(dbObj);
         }
 
         public async Task DeleteAsync(int id)
@@ -90,6 +82,6 @@ namespace BloggingSite.Services.Service
         public void Update(ApprovedBlog entity)
         {
              _repository.Update(entity);
-        }
+        }       
     }
 }
