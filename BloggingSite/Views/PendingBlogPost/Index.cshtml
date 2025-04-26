@@ -23,7 +23,8 @@
                 <td> @item.Content.Substring(0,10)</td>
                 <td> @item.CreatedDate</td>
                 <td>
-                    <a asp-action="Approved" asp-route-id="@item.Id" class="btn btn-success">Approved</a> |
+                    <a asp-action="SeeMore" asp-route-id="@item.Id" class="btn btn-success">SeeMore</a> |
+                    <a asp-action="Approved" asp-route-PostId="@item.Id" asp-route-AdminStatus="@BlogStatus.Approved" class="btn btn-success">Approved</a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" >Discard</a>
                 </td>
             </tr>
