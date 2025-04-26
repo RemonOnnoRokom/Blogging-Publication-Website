@@ -43,11 +43,11 @@ namespace BloggingSite
             
             var app = builder.Build();
             
-            using (var scope = app.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider.GetRequiredService<UserManager<MyUser>>();
-                await UserSeedData.Initialize(services);
-            }
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    var services = scope.ServiceProvider.GetRequiredService<UserManager<MyUser>>();
+            //    await UserSeedData.Initialize(services);
+            //}
 
             
             // Configure the HTTP request pipeline.
