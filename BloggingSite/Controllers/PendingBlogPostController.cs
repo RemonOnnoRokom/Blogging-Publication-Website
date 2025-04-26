@@ -35,9 +35,9 @@ namespace BloggingSite.Controllers
             return RedirectToAction("Index");
         }
        
-        public async Task<IActionResult> SeeMore(int id)
+        public IActionResult SeeMore(int id)
         {
-            var obj = await _service.GetByIdAsync(id);
+            var obj = _service.GetByIdAsync(id);
 
             return View(nameof(Approved),obj);
         }
