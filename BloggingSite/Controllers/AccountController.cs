@@ -30,7 +30,7 @@ namespace BloggingSite.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Name, model.password, model.RememberMe, false);
-
+                
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
