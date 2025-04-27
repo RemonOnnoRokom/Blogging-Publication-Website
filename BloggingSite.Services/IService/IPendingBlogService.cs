@@ -11,10 +11,10 @@ namespace BloggingSite.Services.IService
     public interface IPendingBlogService
     {
         Task<IEnumerable<PendingBlog>> GetAllAsync();
-        PendingBlog GetByIdAsync(int id);
+        Task<PendingBlog> GetByIdAsync(int id);
         Task AddAsync(PendingBlog entity);
-        void Update(ApprovedBlog entity);
+        Task UpdateAsync(ApprovedBlog entity);
         Task DeleteAsync(int id);
-        void Approved(AdminApprovedVM obj);
+        Task ApprovedAsync(AdminApprovedVM obj);
     }
 }
