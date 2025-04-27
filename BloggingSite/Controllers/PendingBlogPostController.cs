@@ -41,12 +41,12 @@ namespace BloggingSite.Controllers
 
             return View(nameof(Approved),obj);
         }
-
         
         public async Task<IActionResult> Approved([Bind("PostId,AdminStatus")]AdminApprovedVM obj)
         {
-            obj.AdminId = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
-            _service.Approved(obj);
+            MyUser  adminUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            obj.AdminId = adminUser.Id;
+            await _service.ApprovedAsync(obj);
 
            return RedirectToAction(nameof(Index));
         }
@@ -71,7 +71,7 @@ namespace BloggingSite.Controllers
 
         public async Task<IActionResult> Permission(int id)
         {
-            MyUser obj = await _userManager.FindByIdAsync(Convert.ToString(id));
+            MyUser obj = await _userManager.FindByIdAsync(id.ToString());
             if (obj.LockoutEnd is null)
             {
                 obj.LockoutEnd ??= DateTimeOffset.Now.AddMinutes(120 * 1440);
