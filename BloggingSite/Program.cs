@@ -9,6 +9,7 @@ using BlogginSite.Repositories.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Serilog;
 
 namespace BloggingSite
 {
@@ -36,7 +37,9 @@ namespace BloggingSite
             .AddRoles<IdentityRole<long>>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
-            
+           
+            Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
+
             builder.Services.AddScoped<IPendingBlogService,PendingBlogService>();
 
             builder.Services.AddScoped<IApprovedBlogRepository,ApprovedBlogRepository>();

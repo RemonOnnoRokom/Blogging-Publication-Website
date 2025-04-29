@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 
 namespace BloggingSite.Controllers
@@ -29,7 +30,8 @@ namespace BloggingSite.Controllers
 
             approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x => x.CurrentStatus == BlogStatus.Approved).Skip(skip - 5).Take(6).ToList(); 
             approvedBlogVM.ItemNumber = skip;
-
+            Console.Clear();
+            Log.Information($"{RouteData.Values["controller"]}/{RouteData.Values["action"]} : an exception is occured");
             return View(approvedBlogVM);
         }        
 

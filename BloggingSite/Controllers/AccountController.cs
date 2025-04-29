@@ -4,6 +4,7 @@ using BloggingSite.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace BloggingSite.Controllers
 {
@@ -20,7 +21,7 @@ namespace BloggingSite.Controllers
         }
         
         public IActionResult LogIn()
-        {
+        {          
             return View();
         }
         
@@ -33,6 +34,7 @@ namespace BloggingSite.Controllers
                 
                 if (result.Succeeded)
                 {
+                    Log.Information("Successfuly login ");
                     return RedirectToAction("Index", "Home");
                 }
                
