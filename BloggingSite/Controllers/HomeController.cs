@@ -30,8 +30,7 @@ namespace BloggingSite.Controllers
 
             approvedBlogVM.ApprovedBlogs = _context.ApprovedBlogs.Where(x => x.CurrentStatus == BlogStatus.Approved).Skip(skip - 5).Take(6).ToList(); 
             approvedBlogVM.ItemNumber = skip;
-            Console.Clear();
-            Log.Information($"{RouteData.Values["controller"]}/{RouteData.Values["action"]} : an exception is occured");
+            //throw new Exception("It occurs"); 
             return View(approvedBlogVM);
         }        
 
