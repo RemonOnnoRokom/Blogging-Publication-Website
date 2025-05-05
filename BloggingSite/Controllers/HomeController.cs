@@ -17,7 +17,7 @@ namespace BloggingSite.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly UserManager<MyUser> _userManager;
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context,UserManager<MyUser> userManager)
+         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context,UserManager<MyUser> userManager)
         {
             _logger = logger;
             _context = context;

@@ -70,6 +70,7 @@ namespace BloggingSite.Services.Service
         {
            await _repository.UpdateAsync(obj);
         }
+
         public async Task DeleteAsync(int id)
         {
             await _repository.DeleteAsync(id);
@@ -80,7 +81,6 @@ namespace BloggingSite.Services.Service
             var dbObj = await _repository.GetByIdAsync(obj.PostId);
             dbObj.CurrentStatus = obj.AdminStatus;
             dbObj.ApprovedBy = obj.AdminId;
-
             await _repository.UpdateAsync(dbObj);
         }
                           
