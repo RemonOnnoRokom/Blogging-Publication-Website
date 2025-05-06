@@ -8,9 +8,9 @@ using NSubstitute;
 
 namespace Blogging.Tests.Services.PendingBlogServiceTest
 {
-    public class PendingBlogServiceGetByIdAsyncTest : PendingBlogServiceBeseTest
+    public class PendingBlogServiceSingleInstanceLoadingFunctionTest : PendingBlogServiceBeseTest
     {
-        public PendingBlogServiceGetByIdAsyncTest()
+        public PendingBlogServiceSingleInstanceLoadingFunctionTest()
         {
             
         }
