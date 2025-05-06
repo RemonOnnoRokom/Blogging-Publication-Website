@@ -15,15 +15,11 @@ using Xunit.Sdk;
 
 namespace Blogging.Tests.Services.PendingBlogServiceTest
 {
-    public class PendingBlogServiceTest
+    public class PendingBlogServiceTest : PendingBlogServiceBeseTest
     {
-        private readonly IPendingBlogService _sut;
-        private readonly IApprovedBlogRepository _approvedBlogRepository;
-
         public PendingBlogServiceTest()
         {
-            _approvedBlogRepository = Substitute.For<IApprovedBlogRepository>();
-            _sut = new PendingBlogService(_approvedBlogRepository);
+            
         }
 
         [Fact]
