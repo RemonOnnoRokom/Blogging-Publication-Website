@@ -15,9 +15,9 @@ using Xunit.Sdk;
 
 namespace Blogging.Tests.Services.PendingBlogServiceTest
 {
-    public class PendingBlogServiceTest : PendingBlogServiceBeseTest
+    public class PendingBlogServiceGetAllAsyncTest : PendingBlogServiceBeseTest
     {
-        public PendingBlogServiceTest()
+        public PendingBlogServiceGetAllAsyncTest()
         {
             
         }
@@ -35,38 +35,7 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
 
             //Assert
             Assert.Equal(expectedData.Count() , result.Count());
-        }
-
-        [Fact]
-        public async Task GetByIdAsync_RepoReturnApprovedBlog_ReturnApprovedBlog()
-        {
-            //Arrange 
-            const int id = 1;
-            var expectedApprovedBlog = GetByIdDummyData();
-
-            _approvedBlogRepository .GetByIdAsync(id).Returns(expectedApprovedBlog);
-
-            //Act
-            var result = await _sut.GetByIdAsync(id);
-
-            //Assert
-            Assert.Equal(expectedApprovedBlog.Id , result.Id);
-            Assert.Equal(expectedApprovedBlog.Content, result.Content);
-            Assert.Equal(expectedApprovedBlog.CreatedDate, result.CreatedDate);
-        }
-
-        [Fact]
-        public async Task AddAsync_ValidEntity_AddSuccessful()
-        {
-            //Arrange
-            var entityPending = GetPendingBlog();
-                       
-            //Act 
-            var result = _sut.AddAsync(entityPending);
-
-            //Assert
-            await _approvedBlogRepository.Received(1).AddAsync(Arg.Any<ApprovedBlog>());
-        }
+        }              
 
         [Fact]
         public async Task UpdateAsync_ValidEntity_UpdateSuccessful()
@@ -149,21 +118,7 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
             };
             return specificBlog;
         }
-        #endregion
-
-        #region helper(AddAsync)
-        public PendingBlog GetPendingBlog()
-        {
-            PendingBlog entity = new PendingBlog()
-            {
-                CreatedBy = 2,
-                Content = "Mamma",
-                CreatedDate = DateTime.Now
-            };
-
-            return entity;
-        }
-        #endregion
+        #endregion        
 
         #region helper(AdminApprovedVm)
         public AdminApprovedVM DummyAdminApprovedVM()
