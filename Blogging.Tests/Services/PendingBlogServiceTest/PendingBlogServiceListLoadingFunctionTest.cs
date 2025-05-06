@@ -15,12 +15,8 @@ using Xunit.Sdk;
 
 namespace Blogging.Tests.Services.PendingBlogServiceTest
 {
-    public class PendingBlogServiceListLoadingFunctionTest : PendingBlogServiceBeseTest
-    {
-        public PendingBlogServiceListLoadingFunctionTest()
-        {
-            
-        }
+    public class PendingBlogServiceListLoadingFunctionTest : PendingBlogServiceBaseTest
+    {       
 
         [Fact]
         public async Task GetAllAsync_RepoReturnApprovedBlogList_ValidList()

@@ -8,13 +8,8 @@ using NSubstitute;
 
 namespace Blogging.Tests.Services.PendingBlogServiceTest
 {
-    public class PendingBlogServiceSingleInstanceLoadingFunctionTest : PendingBlogServiceBeseTest
+    public class PendingBlogServiceSingleInstanceLoadingFunctionTest : PendingBlogServiceBaseTest
     {
-        public PendingBlogServiceSingleInstanceLoadingFunctionTest()
-        {
-            
-        }
-
         [Fact]
         public async Task GetByIdAsync_RepoReturnApprovedBlog_ReturnApprovedBlog()
         {
