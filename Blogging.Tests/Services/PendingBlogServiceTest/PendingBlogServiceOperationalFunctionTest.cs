@@ -9,13 +9,9 @@ using NSubstitute;
 
 namespace Blogging.Tests.Services.PendingBlogServiceTest
 {
-    public class PendingBlogServiceOerationalFunctionTest : PendingBlogServiceBeseTest
+    public class PendingBlogServiceOperationalFunctionTest : PendingBlogServiceBaseTest
     {
-        public PendingBlogServiceOerationalFunctionTest()
-        {
-            
-        }
-
+        #region AddAsync
         [Fact]
         public async Task AddAsync_ValidEntity_AddSuccessful()
         {
@@ -28,7 +24,9 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
             //Assert
             await _approvedBlogRepository.Received(1).AddAsync(Arg.Any<ApprovedBlog>());
         }
+        #endregion
 
+        #region UpdateAsync
         [Fact]
         public async Task UpdateAsync_ValidEntity_UpdateSuccessful()
         {
@@ -41,7 +39,9 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
             //Assert
             await _approvedBlogRepository.Received(1).UpdateAsync(GetByIdSpecificData);
         }
+        #endregion
 
+        #region DeleteAsync
         [Fact]
         public async Task DeleteAsync_ValidEntity_DeleteSuccessful()
         {
@@ -54,7 +54,9 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
             //Assert
             await _approvedBlogRepository.Received(1).DeleteAsync(Arg.Any<int>());
         }
+        #endregion
 
+        #region ApprovedAsync
         [Fact]
         public async Task ApprovedAsync_BlogStatusApproved_BlogApprovedSuccessful()
         {
@@ -70,6 +72,7 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
             //Assert
             await _approvedBlogRepository.Received(1).UpdateAsync(Arg.Any<ApprovedBlog>());
         }
+        #endregion
 
         #region helper(Specific Id)
         public ApprovedBlog GetByIdDummyData()
