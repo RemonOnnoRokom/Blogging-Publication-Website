@@ -10,13 +10,13 @@ using NSubstitute;
 
 namespace Blogging.Tests.Services.PendingBlogServiceTest
 {
-    public class PendingBlogServiceBeseTest
+    public class PendingBlogServiceBaseTest
     {
 
         protected readonly IPendingBlogService _sut;
         protected readonly IApprovedBlogRepository _approvedBlogRepository;
 
-        public PendingBlogServiceBeseTest()
+        public PendingBlogServiceBaseTest()
         {
             _approvedBlogRepository = Substitute.For<IApprovedBlogRepository>();
             _sut = new PendingBlogService(_approvedBlogRepository);
