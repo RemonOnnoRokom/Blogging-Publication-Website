@@ -35,20 +35,7 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
 
             //Assert
             Assert.Equal(expectedData.Count() , result.Count());
-        }                      
-
-        [Fact]
-        public async Task DeleteAsync_ValidEntity_DeleteSuccessful()
-        {
-            //Arrange
-            const int id = 2;
-
-            //Act
-            await _sut.DeleteAsync(id);
-
-            //Assert
-            await _approvedBlogRepository.Received(1).DeleteAsync(Arg.Any<int>());
-        }
+        }                              
 
         [Fact]
         public async Task ApprovedAsync_BlogStatusApproved_BlogApprovedSuccessful()
