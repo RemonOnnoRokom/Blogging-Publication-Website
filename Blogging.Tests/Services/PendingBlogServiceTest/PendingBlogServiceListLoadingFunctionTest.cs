@@ -15,9 +15,9 @@ using Xunit.Sdk;
 
 namespace Blogging.Tests.Services.PendingBlogServiceTest
 {
-    public class PendingBlogServiceGetAllAsyncTest : PendingBlogServiceBeseTest
+    public class PendingBlogServiceListLoadingFunctionTest : PendingBlogServiceBeseTest
     {
-        public PendingBlogServiceGetAllAsyncTest()
+        public PendingBlogServiceListLoadingFunctionTest()
         {
             
         }
