@@ -13,8 +13,8 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
     public class PendingBlogServiceBeseTest
     {
 
-        private readonly IPendingBlogService _sut;
-        private readonly IApprovedBlogRepository _approvedBlogRepository;
+        protected readonly IPendingBlogService _sut;
+        protected readonly IApprovedBlogRepository _approvedBlogRepository;
 
         public PendingBlogServiceBeseTest()
         {
