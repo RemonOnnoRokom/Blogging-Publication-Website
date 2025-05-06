@@ -18,7 +18,7 @@ namespace BloggingSite.Services.Service
             _repository = repository;
         }
 
-        #region GetAllAsync
+        #region List Loading Fucntion
         public async Task<IEnumerable<PendingBlog>> GetAllAsync()
         {
             List<ApprovedBlog> list = await _repository.GetAllAsync();
@@ -38,7 +38,7 @@ namespace BloggingSite.Services.Service
         }
         #endregion
 
-        #region GetByIdAsync
+        #region Single Instance Loading Function
         public async Task<PendingBlog> GetByIdAsync(int id)
         {
             ApprovedBlog Obj = await _repository.GetByIdAsync(id);
@@ -59,7 +59,7 @@ namespace BloggingSite.Services.Service
         }
         #endregion
 
-        #region AddAsync
+        #region Operational Function
         public async Task AddAsync(PendingBlog entity)
         {
             ApprovedBlog Obj = new ApprovedBlog();
@@ -70,23 +70,17 @@ namespace BloggingSite.Services.Service
 
             await _repository.AddAsync(Obj);
         }
-        #endregion
-
-        #region UpdateAsync
+        
         public async Task UpdateAsync(ApprovedBlog obj)
         {
             await _repository.UpdateAsync(obj);
         }
-        #endregion
-
-        #region DeleteAsync
+       
         public async Task DeleteAsync(int id)
         {
             await _repository.DeleteAsync(id);
         }
-        #endregion
 
-        #region ApprovedAsync
         public async Task ApprovedAsync(AdminApprovedVM obj)
         {
             var dbObj = await _repository.GetByIdAsync(obj.PostId);
@@ -94,7 +88,6 @@ namespace BloggingSite.Services.Service
             dbObj.ApprovedBy = obj.AdminId;
             await _repository.UpdateAsync(dbObj);
         }
-        #endregion
-
+        #endregion       
     }
 }
