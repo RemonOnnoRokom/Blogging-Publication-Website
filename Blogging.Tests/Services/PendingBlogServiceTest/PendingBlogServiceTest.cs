@@ -89,7 +89,7 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
         public async Task DeleteAsync_ValidEntity_DeleteSuccessful()
         {
             //Arrange
-            int id = 2;
+            const int id = 2;
 
             //Act
             await _sut.DeleteAsync(id);
