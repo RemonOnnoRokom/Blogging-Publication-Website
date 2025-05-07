@@ -25,7 +25,7 @@ namespace BlogginSite.Repositories.Repository
             try
             {
                 var list = await _context.ApprovedBlogs.AsNoTracking().ToListAsync();
-
+               
                 return list;
             }
             catch (Exception)
@@ -44,9 +44,8 @@ namespace BlogginSite.Repositories.Repository
 
                 return obj;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex.Message);
                 throw;
             }        
         }
