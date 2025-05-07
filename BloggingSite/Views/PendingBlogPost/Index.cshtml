@@ -28,7 +28,9 @@
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" >Discard</a>
                 </td>
             </tr>
-        }
+        }        
     </tbody>
 </table>
 
+<p class="text-danger fw-bolder">@ViewData["Error"]</p>
+<p class="text-danger fw-bolder">@TempData["Error"]</p>
