@@ -21,35 +21,34 @@ namespace BlogginSite.Repositories.Repository
             _context = context;
         }
         public async Task<List<ApprovedBlog>> GetAllAsync()
-        {
-            List<ApprovedBlog> list = null;
+        {           
             try
             {
-                list = await _context.ApprovedBlogs.AsNoTracking().ToListAsync();                
+                var list = await _context.ApprovedBlogs.AsNoTracking().ToListAsync();
+
+                return list;
             }
             catch (Exception)
             {
                 Console.WriteLine("Exception is happening in fetching GetAllAsync");
                 throw;
             }
-            return list;
+           
         }
 
         public async Task<ApprovedBlog> GetByIdAsync(int id)
-        {
-            ApprovedBlog obj = null;
-
+        {           
             try
             {
-                obj = await _context.ApprovedBlogs.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();               
+               var obj = await _context.ApprovedBlogs.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+
+                return obj;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
-            }
-
-            return obj;
+            }        
         }
 
         public async Task AddAsync(ApprovedBlog entity)
@@ -89,9 +88,8 @@ namespace BlogginSite.Repositories.Repository
                 _context.Entry(obj).State = EntityState.Modified;             
                 await _context.SaveChangesAsync();
             }
-            catch(Exception ex)
-            {
-                Console.WriteLine($"{ex.Message}");
+            catch(Exception)
+            {               
                 throw;
             }
            
