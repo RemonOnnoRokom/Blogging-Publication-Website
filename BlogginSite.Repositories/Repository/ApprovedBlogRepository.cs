@@ -22,35 +22,63 @@ namespace BlogginSite.Repositories.Repository
         }
         public async Task<List<ApprovedBlog>> GetAllAsync()
         {
-            var list = await _context.ApprovedBlogs.AsNoTracking().ToListAsync();
+            List<ApprovedBlog> list = null;
+            try
+            {
+                list = await _context.ApprovedBlogs.AsNoTracking().ToListAsync();                
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Exception is happening in fetching GetAllAsync");
+                throw;
+            }
             return list;
         }
 
         public async Task<ApprovedBlog> GetByIdAsync(int id)
         {
+            ApprovedBlog obj = null;
+
             try
             {
-                var obj = await _context.ApprovedBlogs.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
-                return obj;
+                obj = await _context.ApprovedBlogs.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();               
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return null;
+                throw;
             }
+
+            return obj;
         }
 
         public async Task AddAsync(ApprovedBlog entity)
         {
-            await _context.ApprovedBlogs.AddAsync(entity);
-            await _context.SaveChangesAsync();           
+            try
+            {
+                await _context.ApprovedBlogs.AddAsync(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+                  
         }
 
         public async Task DeleteAsync(int id)
         {
-            var obj = await _context.ApprovedBlogs.FirstOrDefaultAsync(x=>x.Id == id);
-            _context.ApprovedBlogs.Remove(obj);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var obj = await _context.ApprovedBlogs.FirstOrDefaultAsync(x => x.Id == id);
+                _context.ApprovedBlogs.Remove(obj);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+           
         }                
 
         public async Task UpdateAsync(ApprovedBlog obj)
@@ -64,6 +92,7 @@ namespace BlogginSite.Repositories.Repository
             catch(Exception ex)
             {
                 Console.WriteLine($"{ex.Message}");
+                throw;
             }
            
         }
