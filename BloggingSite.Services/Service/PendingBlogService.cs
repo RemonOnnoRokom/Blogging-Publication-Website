@@ -18,22 +18,31 @@ namespace BloggingSite.Services.Service
             _repository = repository;
         }
 
-        #region List Loading Fucntion
+        #region List Loading Function
         public async Task<IEnumerable<PendingBlog>> GetAllAsync()
         {
-            List<ApprovedBlog> list = await _repository.GetAllAsync();
+            List<PendingBlog> result = null;
+            try
+            {
+                List<ApprovedBlog> list = await _repository.GetAllAsync();
 
-            List<PendingBlog> result = list.Where(x => x.CurrentStatus == BlogStatus.Create)
-                                            .Select(x =>
-                                                        new PendingBlog()
-                                                        {
-                                                            Id = x.Id,
-                                                            CreatedBy = x.CreatedBy,
-                                                            Content = x.Content,
-                                                            CreatedDate = x.CreatedDate
-                                                        })
-                                            .ToList();
-
+                result = list.Where(x => x.CurrentStatus == BlogStatus.Create)
+                                                .Select(x =>
+                                                            new PendingBlog()
+                                                            {
+                                                                Id = x.Id,
+                                                                CreatedBy = x.CreatedBy,
+                                                                Content = x.Content,
+                                                                CreatedDate = x.CreatedDate
+                                                            })
+                                                .ToList();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Exception occured in PendingBlogService");
+                throw;
+            }
+            
             return result;
         }
         #endregion
@@ -41,52 +50,92 @@ namespace BloggingSite.Services.Service
         #region Single Instance Loading Function
         public async Task<PendingBlog> GetByIdAsync(int id)
         {
-            ApprovedBlog Obj = await _repository.GetByIdAsync(id);
-
-            PendingBlog result = null;
-            if (Obj.CurrentStatus == BlogStatus.Create)
+            try
             {
-                result = new PendingBlog()
-                {
-                    Id = Obj.Id,
-                    CreatedBy = Obj.CreatedBy,
-                    Content = Obj.Content,
-                    CreatedDate = Obj.CreatedDate
-                };
-            }
+                ApprovedBlog Obj = await _repository.GetByIdAsync(id);
 
-            return result;
+                PendingBlog result = null;
+                if (Obj.CurrentStatus == BlogStatus.Create)
+                {
+                    result = new PendingBlog()
+                    {
+                        Id = Obj.Id,
+                        CreatedBy = Obj.CreatedBy,
+                        Content = Obj.Content,
+                        CreatedDate = Obj.CreatedDate
+                    };
+                }
+
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
         #endregion
 
         #region Operational Function
         public async Task AddAsync(PendingBlog entity)
         {
-            ApprovedBlog Obj = new ApprovedBlog();
+            try
+            {
+                ApprovedBlog Obj = new ApprovedBlog();
 
-            Obj.CreatedBy = entity.CreatedBy;
-            Obj.Content = entity.Content;
-            Obj.CreatedDate = entity.CreatedDate;
+                Obj.CreatedBy = entity.CreatedBy;
+                Obj.Content = entity.Content;
+                Obj.CreatedDate = entity.CreatedDate;
 
-            await _repository.AddAsync(Obj);
+                await _repository.AddAsync(Obj);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
         
         public async Task UpdateAsync(ApprovedBlog obj)
         {
-            await _repository.UpdateAsync(obj);
+            try
+            {
+                await _repository.UpdateAsync(obj);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
        
         public async Task DeleteAsync(int id)
         {
-            await _repository.DeleteAsync(id);
+            try
+            {
+                await _repository.DeleteAsync(id);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+           
         }
 
         public async Task ApprovedAsync(AdminApprovedVM obj)
         {
-            var dbObj = await _repository.GetByIdAsync(obj.PostId);
-            dbObj.CurrentStatus = obj.AdminStatus;
-            dbObj.ApprovedBy = obj.AdminId;
-            await _repository.UpdateAsync(dbObj);
+            try
+            {
+                var dbObj = await _repository.GetByIdAsync(obj.PostId);
+                dbObj.CurrentStatus = obj.AdminStatus;
+                dbObj.ApprovedBy = obj.AdminId;
+                await _repository.UpdateAsync(dbObj);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
         #endregion       
     }
