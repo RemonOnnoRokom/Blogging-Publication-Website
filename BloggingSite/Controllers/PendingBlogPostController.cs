@@ -47,7 +47,7 @@ namespace BloggingSite.Controllers
                 TempData["Error"] = "Not working Properly";                
             }
             
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
        
         public async Task<IActionResult> SeeMore(int id)
@@ -69,8 +69,8 @@ namespace BloggingSite.Controllers
         {
             try
             {
-                MyUser adminUser = await _userManager.FindByNameAsync(User.Identity.Name);
-                obj.AdminId = adminUser.Id;
+                MyUser? adminUser = await _userManager.FindByNameAsync(User?.Identity?.Name!);
+                obj.AdminId = adminUser!.Id;
                 await _service.ApprovedAsync(obj);               
             }
             catch (Exception)
@@ -99,7 +99,7 @@ namespace BloggingSite.Controllers
             return View(topBlogEntities);
         }
 
-        public async Task<IActionResult> UserList([FromServices]ApplicationDbContext context)
+        public IActionResult UserList([FromServices]ApplicationDbContext context)
         {
             List<MyUser> list = new List<MyUser>();
             try
@@ -118,10 +118,10 @@ namespace BloggingSite.Controllers
         {
             try
             {
-                MyUser obj = await _userManager.FindByIdAsync(id.ToString());
-                if (obj.LockoutEnd is null)
+                MyUser? obj = await _userManager.FindByIdAsync(id.ToString());
+                if (obj?.LockoutEnd is null)
                 {
-                    obj.LockoutEnd ??= DateTimeOffset.Now.AddMinutes(120 * 1440);
+                    obj!.LockoutEnd ??= DateTimeOffset.Now.AddMinutes(120 * 1440);
                 }
                 else
                 {
