@@ -11,6 +11,7 @@ using BloggingSite.Services.Service;
 using BlogginSite.Repositories.IRepository;
 using Microsoft.Identity.Client;
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 using Xunit.Sdk;
 
 namespace Blogging.Tests.Services.PendingBlogServiceTest
@@ -19,7 +20,7 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
     {       
 
         [Fact]
-        public async Task GetAllAsync_RepoReturnApprovedBlogList_ValidList()
+        public async Task GetAllAsync_RepoReturnApprovedBlogList_ReturnValidList()
         {
             //Arrange
             var expectedData = GetAllDummyData();
@@ -31,8 +32,17 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
 
             //Assert
             Assert.Equal(expectedData.Count() , result.Count());
-        }                                      
+        }
 
+        [Fact]
+        public async Task GetAllAsync_RepoThrowException_ReThrowException()
+        {
+            //Arrange
+             _approvedBlogRepository.GetAllAsync().ThrowsAsync(new Exception());
+            
+            //Assert
+            await Assert.ThrowsAsync<Exception>( ()=> _sut.GetAllAsync());
+        }
         #region helper( GetAllDummyData)
         public List<ApprovedBlog> GetAllDummyData()
         {

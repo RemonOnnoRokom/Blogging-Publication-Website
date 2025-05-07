@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BloggingSite.Models.Entities;
 using BloggingSite.Models.ViewModel;
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 
 namespace Blogging.Tests.Services.PendingBlogServiceTest
 {
@@ -24,6 +25,19 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
             //Assert
             await _approvedBlogRepository.Received(1).AddAsync(Arg.Any<ApprovedBlog>());
         }
+
+        [Fact]
+        public async Task AddAsync_RepoThrowException_ReThrowException()
+        {
+            //Arrange
+            var entityPendign = GetPendingBlog();
+
+            _approvedBlogRepository.AddAsync(Arg.Any<ApprovedBlog>()).ThrowsAsync(new Exception());
+
+            //Act & Assert
+            await Assert.ThrowsAsync<Exception>(() => _sut.AddAsync(entityPendign));
+
+        }
         #endregion
 
         #region UpdateAsync
@@ -31,13 +45,25 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
         public async Task UpdateAsync_ValidEntity_UpdateSuccessful()
         {
             //Arrange
-            var GetByIdSpecificData = GetByIdDummyData();
+            var getByIdSpecificData = GetByIdDummyData();
 
             //Act
-            await _sut.UpdateAsync(GetByIdSpecificData);
+            await _sut.UpdateAsync(getByIdSpecificData);
 
             //Assert
-            await _approvedBlogRepository.Received(1).UpdateAsync(GetByIdSpecificData);
+            await _approvedBlogRepository.Received(1).UpdateAsync(getByIdSpecificData);
+        }
+
+        [Fact]
+        public async Task UpdateAsync_RepoThrowException_ReThrowException()
+        {
+            //Arrange
+            var getByIdSpecificData = GetByIdDummyData();
+
+            _approvedBlogRepository.UpdateAsync(Arg.Any<ApprovedBlog>()).ThrowsAsync(new Exception());
+
+            //Assert & Act
+            await Assert.ThrowsAsync<Exception>(() => _sut.UpdateAsync(getByIdSpecificData));
         }
         #endregion
 
@@ -53,6 +79,18 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
 
             //Assert
             await _approvedBlogRepository.Received(1).DeleteAsync(Arg.Any<int>());
+        }
+
+        [Fact]
+        public async Task DeleteAsync_RepoThrowException_ReThrowException()
+        {
+            //Arrange
+            const int id = 2;
+
+            _approvedBlogRepository.DeleteAsync(Arg.Any<int>()).ThrowsAsync(new Exception());
+
+            //Act & Assert
+            await Assert.ThrowsAsync<Exception>(()=>_sut.DeleteAsync(id));
         }
         #endregion
 
@@ -72,7 +110,21 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
             //Assert
             await _approvedBlogRepository.Received(1).UpdateAsync(Arg.Any<ApprovedBlog>());
         }
+
+        [Fact]
+        public async Task ApprovedAsync_RepoThrowException_ReThrowException()
+        {
+            //Arrange
+            var entityData = DummyAdminApprovedVM();
+
+            _approvedBlogRepository.GetByIdAsync(Arg.Any<int>()).ThrowsAsync(new Exception());
+
+            //Act & Assert
+            await Assert.ThrowsAsync<Exception>(() => _sut.ApprovedAsync(entityData));
+        }
         #endregion
+
+        #region Helper Region 
 
         #region helper(Specific Id)
         public ApprovedBlog GetByIdDummyData()
@@ -115,6 +167,8 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
 
             return entity;
         }
+        #endregion
+
         #endregion
     }
 }

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BloggingSite.Models.Entities;
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
+using Xunit.Sdk;
 
 namespace Blogging.Tests.Services.PendingBlogServiceTest
 {
@@ -28,6 +30,18 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
             Assert.Equal(expectedApprovedBlog.CreatedDate, result.CreatedDate);
         }
 
+        [Fact]
+        public async Task GetByIdAsync_RepoReturnException_ReThrowException()
+        {
+            //Arrange
+            const int id = 1;
+
+            _approvedBlogRepository.GetByIdAsync(id).ThrowsAsync(new Exception());
+
+            //Act & Assert
+            await Assert.ThrowsAsync<Exception>(() => _sut.GetByIdAsync(id));
+        }
+
         #region helper(Specific Id)
         public ApprovedBlog GetByIdDummyData()
         {
@@ -41,6 +55,6 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
             };
             return specificBlog;
         }
-        #endregion
+        #endregion  
     }
 }
