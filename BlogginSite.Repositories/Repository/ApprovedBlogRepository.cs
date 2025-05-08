@@ -32,8 +32,7 @@ namespace BlogginSite.Repositories.Repository
             {
                 Console.WriteLine("Exception is happening in fetching GetAllAsync");
                 throw;
-            }
-           
+            }           
         }
 
         public async Task<ApprovedBlog> GetByIdAsync(int id)
@@ -42,7 +41,7 @@ namespace BlogginSite.Repositories.Repository
             {
                var obj = await _context.ApprovedBlogs.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
 
-                return obj;
+                return obj!;
             }
             catch (Exception)
             {
@@ -60,8 +59,7 @@ namespace BlogginSite.Repositories.Repository
             catch (Exception)
             {
                 throw;
-            }
-                  
+            }                  
         }
 
         public async Task DeleteAsync(int id)
@@ -69,14 +67,13 @@ namespace BlogginSite.Repositories.Repository
             try
             {
                 var obj = await _context.ApprovedBlogs.FirstOrDefaultAsync(x => x.Id == id);
-                _context.ApprovedBlogs.Remove(obj);
+                _context.ApprovedBlogs.Remove(obj!);
                 await _context.SaveChangesAsync();
             }
             catch (Exception)
             {
                 throw;
-            }
-           
+            }          
         }                
 
         public async Task UpdateAsync(ApprovedBlog obj)
@@ -90,8 +87,7 @@ namespace BlogginSite.Repositories.Repository
             catch(Exception)
             {               
                 throw;
-            }
-           
+            }           
         }
     }
 }
