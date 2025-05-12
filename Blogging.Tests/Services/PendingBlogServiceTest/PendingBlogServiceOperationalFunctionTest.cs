@@ -30,12 +30,12 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
         public async Task AddAsync_RepoThrowException_ReThrowException()
         {
             //Arrange
-            var entityPendign = GetPendingBlog();
+            var entityPending = GetPendingBlog();
 
             _approvedBlogRepository.AddAsync(Arg.Any<ApprovedBlog>()).ThrowsAsync(new Exception());
 
             //Act & Assert
-            await Assert.ThrowsAsync<Exception>(() => _sut.AddAsync(entityPendign));
+            await Assert.ThrowsAsync<Exception>(() => _sut.AddAsync(entityPending));
 
         }
         #endregion

@@ -23,15 +23,15 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
         public async Task GetAllAsync_RepoReturnApprovedBlogList_ReturnValidList()
         {
             //Arrange
-            var expectedData = GetAllDummyData();
+            var actualData = GetAllDummyData();
 
-            _approvedBlogRepository.GetAllAsync().Returns(expectedData);
+            _approvedBlogRepository.GetAllAsync().Returns(actualData);
 
             //Act
-            var result =  await _sut.GetAllAsync();
+            var expect =  await _sut.GetAllAsync();
 
             //Assert
-            Assert.Equal(expectedData.Count() , result.Count());
+            Assert.Equal(expect.Count() , actualData.Count());
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace Blogging.Tests.Services.PendingBlogServiceTest
             //Arrange
              _approvedBlogRepository.GetAllAsync().ThrowsAsync(new Exception());
             
-            //Assert
+            //Act & Assert
             await Assert.ThrowsAsync<Exception>( ()=> _sut.GetAllAsync());
         }
         #region helper( GetAllDummyData)
